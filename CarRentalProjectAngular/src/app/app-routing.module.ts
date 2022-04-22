@@ -4,7 +4,9 @@ import { AboutComponent } from './components/about/about.component';
 import { BrowseComponent } from './components/browse/browse.component';
 
 const routes: Routes = [
-   
+  {path: 'browse', component: BrowseComponent},
+  {path: 'about', component: AboutComponent},
+  {path: '', pathMatch: 'full', redirectTo: 'browse'}
 ];
 
 @NgModule({
