@@ -8,17 +8,17 @@ export class AuthService {
 
   constructor() { }
 
-  private authenticateBehaviorSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private authenticateBehaviorSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   authAsObservable(): Observable<boolean>{
-    return this.authenticateBehaviorSubject.asObservable();
+    return this.authenticateBehaviorSubject$.asObservable();
   }
 
   login(){
     //we need some api logic here
-    this.authenticateBehaviorSubject.next(true);
+    this.authenticateBehaviorSubject$.next(true);
   }
 
   logout(){
-    this.authenticateBehaviorSubject.next(false);
+    this.authenticateBehaviorSubject$.next(false);
   }
 }
