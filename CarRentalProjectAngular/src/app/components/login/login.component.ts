@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { LoginCredentials } from 'src/app/models/login-credentials';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,20 +10,30 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router ) {}
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {}
 
   auth$!: Observable<boolean>;
-  redirectURL!: string;
+  loginCredentials: LoginCredentials = {
+    loginId: '',
+    password: '',
+  };
+  loginCredentialsForm!: FormGroup;
+
   ngOnInit(): void {
+    //Redirect
     this.auth$ = this.authService.authAsObservable();
-    this.activatedRoute.queryParams.subscribe(queryString => {this.redirectURL = queryString['redirectURL'];})
+    //Form
+    this.loginCredentialsForm = this.formBuilder.group({
+      loginId: [this.loginCredentials.loginId, [Validators.required]],
+      password: [this.loginCredentials.password, [Validators.required]],
+    });
   }
 
   login() {
     this.authService.login();
-    if (this.redirectURL) {
-      this.router.navigateByUrl(this.redirectURL)
-    }
   }
 
   logout() {
