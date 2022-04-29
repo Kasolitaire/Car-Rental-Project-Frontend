@@ -1,13 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
-
+  constructor(private httpClient: HttpClient) { }
+  private userSubject: Subject<User> = new Subject<User>();
   private authenticateBehaviorSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   authAsObservable(): Observable<boolean>{
     return this.authenticateBehaviorSubject$.asObservable();
