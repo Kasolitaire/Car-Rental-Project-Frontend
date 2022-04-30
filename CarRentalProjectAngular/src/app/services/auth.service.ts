@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { LoginCredentials } from '../models/login-credentials';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ export class AuthService {
     return this.authenticateBehaviorSubject$.asObservable();
   }
 
-  loginService(loginCredentials: LoginCredentials) {
+  loginService() {
     this.authenticateBehaviorSubject$.next(true);
   }
 
