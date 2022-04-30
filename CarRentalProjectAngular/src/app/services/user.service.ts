@@ -13,9 +13,14 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
     this.serverURL = environment.serverURL;
   }
-  private serverURL: string;
-  public userObservable$!: Observable<User>
   
+  private serverURL: string;
+  private userObservable$!: Observable<User>
+
+  returnUserObservable(){
+    return this.userObservable$;
+  }
+
   getUserObservable(loginCredentials: LoginCredentials){
     this.userObservable$ = this.httpClient.get<User>(
       `${this.serverURL}Login/${loginCredentials.loginId},${loginCredentials.password}`
