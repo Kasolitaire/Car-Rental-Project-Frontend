@@ -2,23 +2,22 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor() {}
 
-  constructor() { }
-
-  private authenticateBehaviorSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  authAsObservable(): Observable<boolean>{
+  private authenticateBehaviorSubject$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  authAsObservable(): Observable<boolean> {
     return this.authenticateBehaviorSubject$.asObservable();
   }
 
-  login(){
-    //we need some api logic here
+  loginService() {
     this.authenticateBehaviorSubject$.next(true);
   }
 
-  logout(){
+  logoutService() {
     this.authenticateBehaviorSubject$.next(false);
   }
 }

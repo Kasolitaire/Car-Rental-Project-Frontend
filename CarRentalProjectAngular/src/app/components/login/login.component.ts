@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoginCredentials } from 'src/app/models/login-credentials';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService
   ) {}
 
   auth$!: Observable<boolean>;
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
   loginCredentialsForm!: FormGroup;
 
   ngOnInit(): void {
-    //Redirect
+
     this.auth$ = this.authService.authAsObservable();
     //Form
     this.loginCredentialsForm = this.formBuilder.group({
@@ -32,11 +34,19 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
-    this.authService.login();
+  login(loginCredentials: LoginCredentials) {
+    this.userService.getUser(loginCredentials)
+    if (this.userService.user != null) {
+      this.authService.loginService();
+    }
+    else {
+      //not sure what goes here (tell user that credentials are wrong)
+    }
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logoutService();
+    //not amazing this field should be private
+    this.userService.user = null;
   }
 }

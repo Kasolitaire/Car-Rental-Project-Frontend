@@ -2,7 +2,7 @@
 
   username<input formControlName="loginId">
   password<input formControlName="password">
-  <button [disabled]="loginCredentialsForm.invalid" (click)="login()">Login</button>
+  <button [disabled]="loginCredentialsForm.invalid" (click)="login(loginCredentialsForm.value)">Login</button>
 </form>
 <button *ngIf="(auth$ | async)" (click)="logout()">Logout </button>
 
