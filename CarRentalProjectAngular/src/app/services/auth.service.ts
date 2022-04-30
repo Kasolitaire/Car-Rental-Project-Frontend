@@ -1,26 +1,24 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { User } from '../models/user';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { LoginCredentials } from '../models/login-credentials';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor() {}
 
-  constructor(private httpClient: HttpClient) { }
-  private userSubject: Subject<User> = new Subject<User>();
-  private authenticateBehaviorSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  authAsObservable(): Observable<boolean>{
+  private authenticateBehaviorSubject$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  authAsObservable(): Observable<boolean> {
     return this.authenticateBehaviorSubject$.asObservable();
   }
 
-  login(){
-    //we need some api logic here
+  loginService(loginCredentials: LoginCredentials) {
     this.authenticateBehaviorSubject$.next(true);
   }
 
-  logout(){
+  logoutService() {
     this.authenticateBehaviorSubject$.next(false);
   }
 }
