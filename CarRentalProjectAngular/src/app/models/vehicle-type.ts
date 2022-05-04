@@ -1,6 +1,3 @@
-//Not sure if this import makes sense yet
-import { Vehicle } from "./vehicle";
-
 export interface VehicleType {
   vehicleTypeId: number;
   brandName: string;
@@ -9,5 +6,4 @@ export interface VehicleType {
   costPerDayDelayed: number;
   dateManufactured: string;
   gear: string;
-  vehicleInventories: Vehicle[];
 }

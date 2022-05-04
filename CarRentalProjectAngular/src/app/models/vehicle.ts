@@ -1,6 +1,4 @@
-import { VehicleType } from './vehicle-type';
-
-export interface Vehicle {
+export interface VehicleInventory {
   vehicleId: number;
   vehicleTypeId: number;
   kilometers: number;
@@ -8,5 +6,4 @@ export interface Vehicle {
   operational: boolean;
   available: boolean;
   serialNumber: string;
-  vehicleType: VehicleType;
 }
