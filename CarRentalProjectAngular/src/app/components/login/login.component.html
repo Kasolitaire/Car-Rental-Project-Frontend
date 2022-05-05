@@ -1,10 +1,10 @@
-<form *ngIf="!(auth$ | async)" [formGroup]="loginCredentialsForm" aria-label="form validation login">
+<form *ngIf="!(loginStatus$ | async)" [formGroup]="loginCredentialsForm" aria-label="form validation login">
 
   username<input formControlName="loginId">
   password<input formControlName="password">
   <button [disabled]="loginCredentialsForm.invalid" (click)="login(loginCredentialsForm.value)">Login</button>
 </form>
-<button *ngIf="(auth$ | async)" (click)="logout()">Logout </button>
+<button *ngIf="(loginStatus$ | async)" (click)="logout()">Logout </button>
 
 
 

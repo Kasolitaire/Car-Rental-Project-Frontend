@@ -1,11 +1,14 @@
-Login: {{auth$ | async}}
+Admin: {{adminStatus$ | async}}
+<br>
+Login: {{loginStatus$ | async}}
 <mat-toolbar color="primary" aria-label="NavBar">
   <button mat-raised-button routerLink="browse" aria-label="Browse Navigate">
     <mat-icon>home</mat-icon> Browse
   </button>
   <button mat-raised-button routerLink="about" >About</button>
   <button mat-raised-button routerLink="login" class="test">Login</button>
-  <button *ngIf="!(auth$ | async)" mat-raised-button routerLink="register" >Register</button>
+  <button *ngIf="!(loginStatus$ | async)" mat-raised-button routerLink="register" >Register</button>
+  <button mat-raised-button routerLink="admin">Admin</button>
 
 </mat-toolbar>
 
