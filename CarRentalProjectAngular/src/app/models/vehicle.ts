@@ -1,4 +1,4 @@
-export interface VehicleInventory {
+export interface Vehicle {
   vehicleId: number;
   vehicleTypeId: number;
   kilometers: number;
