@@ -1,0 +1,26 @@
+<!-- {{availableVehiclesList|json}}
+{{availableVehicleTypesList|json}} -->
+
+<form [formGroup]="vehicleFilterRequirements" >
+  <mat-form-field>
+    <input matInput formControlName="generalRequirement">
+  </mat-form-field>
+
+  <div formGroupName="vehicleRequirements">
+    <mat-form-field>
+      <input matInput formControlName="brandName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="model">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="dateManufactured">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="gear">
+    </mat-form-field>
+  </div>
+</form>

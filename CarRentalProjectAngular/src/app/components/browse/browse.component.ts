@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Vehicle } from 'src/app/models/vehicle';
+import { VehicleFilterRequirements } from 'src/app/models/vehicle-filter-requirements';
 import { VehicleType } from 'src/app/models/vehicle-type';
 import { BrowseService } from 'src/app/services/browse.service';
 
@@ -32,6 +33,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
         (emittedVehicleTypeList: VehicleType[]) =>
           (this.availableVehicleTypesList = emittedVehicleTypeList)
       );
+
+      //Form Testing
+      const vehicleRequirements: FormGroup = this.formBuilder.group({
+        brandName: '',
+        model: '',
+        dateManufactured: '',
+        gear: ''
+      });
+
+      this.vehicleFilterRequirements = this.formBuilder.group({
+        generalRequirement: '',
+        vehicleRequirements: vehicleRequirements
+      })
+      //trash
+      this.vehicleFilterRequirements.valueChanges.subscribe(value => console.log((value as VehicleFilterRequirements)))
   }
 
   //Subscription Properties
@@ -41,6 +57,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
   //Vehicle Data Properties
   public availableVehiclesList!: Vehicle[];
   public availableVehicleTypesList!: VehicleType[];
+
+  //
+  public vehicleFilterRequirements!: FormGroup;
 
   ngOnDestroy(): void {
     //Unsubscribing
