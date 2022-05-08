@@ -17,7 +17,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.browseService.loadAllAvailableVehicles();
     this.browseService.loadAllAvailableVehicleTypes();
 
-
+    this.vehicleSubscription = this.browseService
+      .getAvailableVehiclesAsObservable()
+      .subscribe(
+        (emittedVehicleList: Vehicle[]) => (this.availableVehiclesList = emittedVehicleList)
+      );
   }
 
   //Subscription Properties
