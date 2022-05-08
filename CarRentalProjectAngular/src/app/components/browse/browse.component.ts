@@ -20,7 +20,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   }
 
-  
+  //Subscription Properties
+  private vehicleSubscription!: Subscription;
+  private vehicleTypeSubscription!: Subscription;
+
   //Vehicle Data Properties
   private availableVehiclesList!: Vehicle[];
   private availableVehicleTypesList!: VehicleType[];
