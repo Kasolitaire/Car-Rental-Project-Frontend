@@ -17,10 +17,19 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.browseService.loadAllAvailableVehicles();
     this.browseService.loadAllAvailableVehicleTypes();
 
+    //Subscription assignment
     this.vehicleSubscription = this.browseService
       .getAvailableVehiclesAsObservable()
       .subscribe(
-        (emittedVehicleList: Vehicle[]) => (this.availableVehiclesList = emittedVehicleList)
+        (emittedVehicleList: Vehicle[]) =>
+          (this.availableVehiclesList = emittedVehicleList)
+      );
+
+    this.vehicleTypeSubscription = this.browseService
+      .getAvailableVehicleTypesAsObservable()
+      .subscribe(
+        (emittedVehicleTypeList: VehicleType[]) =>
+          (this.availableVehicleTypesList = emittedVehicleTypeList)
       );
   }
 
@@ -29,10 +38,12 @@ export class BrowseComponent implements OnInit, OnDestroy {
   private vehicleTypeSubscription!: Subscription;
 
   //Vehicle Data Properties
-  private availableVehiclesList!: Vehicle[];
-  private availableVehicleTypesList!: VehicleType[];
+  public availableVehiclesList!: Vehicle[];
+  public availableVehicleTypesList!: VehicleType[];
 
   ngOnDestroy(): void {
-
+    //Unsubscribing
+    this.vehicleSubscription.unsubscribe();
+    this.vehicleTypeSubscription.unsubscribe();
   }
 }
