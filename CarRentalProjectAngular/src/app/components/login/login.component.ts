@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoginCredentials } from 'src/app/models/login-credentials';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +12,10 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private userService: UserService
+    private formBuilder: FormBuilder
   ) {}
 
-  auth$!: Observable<boolean>;
+  loginStatus$!: Observable<boolean>;
   loginCredentials: LoginCredentials = {
     loginId: '',
     password: '',
@@ -25,8 +23,7 @@ export class LoginComponent implements OnInit {
   loginCredentialsForm!: FormGroup;
 
   ngOnInit(): void {
-
-    this.auth$ = this.authService.authAsObservable();
+    this.loginStatus$ = this.authService.loginStatusAsObservable();
     //Form
     this.loginCredentialsForm = this.formBuilder.group({
       loginId: [this.loginCredentials.loginId, [Validators.required]],
@@ -35,18 +32,10 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginCredentials: LoginCredentials) {
-    this.userService.getUser(loginCredentials)
-    if (this.userService.user != null) {
-      this.authService.loginService();
-    }
-    else {
-      //not sure what goes here (tell user that credentials are wrong)
-    }
+    this.authService.loadUser(loginCredentials)
   }
 
   logout() {
     this.authService.logoutService();
-    //not amazing this field should be private
-    this.userService.user = null;
   }
 }

@@ -9,8 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService) {}
-  auth$!: Observable<boolean>;
+  loginStatus$!: Observable<boolean>;
+  adminStatus$!: Observable<boolean>;
+  adminAuth$!: Observable<boolean>;
   ngOnInit(): void {
-     this.auth$ = this.authService.authAsObservable();
+    this.loginStatus$ = this.authService.loginStatusAsObservable();
+    this.adminStatus$ = this.authService.adminStatusAsObservable();
   }
 }
