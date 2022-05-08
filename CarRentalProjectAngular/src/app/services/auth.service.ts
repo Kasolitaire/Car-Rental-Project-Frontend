@@ -31,15 +31,14 @@ export class AuthService {
       this.userLoginStatus$.next(true);
       this.adminCheck(user);
     } catch (error) {
-      debugger;
       console.log((error as HttpErrorResponse).status);
       //Needs to be more meaningful
     }
     // this.httpClient.post("google.com", {} ).subscribe(t => { this.RegistrationComplete = (t as boolean); } )
   }
 
-  adminCheck(user: User){
-    if(user.userRole == 'admin'){
+  adminCheck(user: User) {
+    if (user.userRole == 'admin') {
       this.adminLoginStatus$.next(true);
     }
   }
@@ -48,7 +47,7 @@ export class AuthService {
     return this.userLoginStatus$.asObservable();
   }
 
-  adminStatusAsObservable(): Observable<boolean>{
+  adminStatusAsObservable(): Observable<boolean> {
     return this.adminLoginStatus$.asObservable();
   }
 
