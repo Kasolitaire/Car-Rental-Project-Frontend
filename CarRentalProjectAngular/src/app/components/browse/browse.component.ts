@@ -16,16 +16,12 @@ export class BrowseComponent implements OnInit , OnDestroy{
   ngOnInit(): void {
     this.browseService.loadAllAvailableVehicles();
     this.browseService.loadAllAvailableVehicleTypes();
-    this.availableVehicles$ = this.browseService.getAvailableVehiclesAsObservable();
-    this.availableVehiclesTypes$ = this.browseService.getAvailableVehicleTypesAsObservable();
-  }
-  availableVehicles$!: Observable<Vehicle[]>;
-  availableVehiclesTypes$!: Observable<VehicleType[]>;
 
-  //temp
-  reload(){
-    this.browseService.loadAllAvailableVehicles()
   }
+
+
+
+
 
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
