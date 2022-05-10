@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './components/admin/admin.component';
 import { BrowsePipe } from './pipes/browse.pipe';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BrowsePipe } from './pipes/browse.pipe';
     LoginComponent,
     RegisterComponent,
     AdminComponent,
-    BrowsePipe
+    BrowsePipe,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
