@@ -58,6 +58,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
           this.vehicleFilterRequirements = emittedVehicleFilterRequirements;
         }
       );
+    this.vehicleFilterRequirements = this.vehicleFilterRequirementsFormGroup.value;
   }
 
   //Subscription Properties
