@@ -12,11 +12,16 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {
     this.serverURL = environment.serverURL;
   }
+  //Server URL from environment
   serverURL: string;
+
+  //Emits any user retrieved
   private userSubject$: Subject<User> = new Subject<User>();
 
+  //Emits a boolean value stating that a user is logged in
   private userLoginStatus$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
+  //Emits a boolean value stating that an admin is logged in
   private adminLoginStatus$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
@@ -31,26 +36,34 @@ export class AuthService {
       this.userLoginStatus$.next(true);
       this.adminCheck(user);
     } catch (error) {
-      console.log((error as HttpErrorResponse).status);
       //Needs to be more meaningful
+      console.log((error as HttpErrorResponse).status);
     }
     // this.httpClient.post("google.com", {} ).subscribe(t => { this.RegistrationComplete = (t as boolean); } )
   }
 
+  //Checks if the user is an admin
   adminCheck(user: User) {
     if (user.userRole == 'admin') {
       this.adminLoginStatus$.next(true);
     }
   }
 
+  userAsObservable(): Observable<User>{
+    return this.userSubject$.asObservable();
+  }
+
+  //Returns an Observable of user login status
   loginStatusAsObservable(): Observable<boolean> {
     return this.userLoginStatus$.asObservable();
   }
 
+  //Return an Observable of admin login status
   adminStatusAsObservable(): Observable<boolean> {
     return this.adminLoginStatus$.asObservable();
   }
 
+  //Logs any user out of the system
   logoutService() {
     this.userLoginStatus$.next(false);
     this.adminLoginStatus$.next(false);
