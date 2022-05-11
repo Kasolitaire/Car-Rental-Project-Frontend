@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
+import { User } from 'src/app/models/user';
 import { Vehicle } from 'src/app/models/vehicle';
 import { VehicleType } from 'src/app/models/vehicle-type';
 import { AuthService } from 'src/app/services/auth.service';
 import { BrowseService } from 'src/app/services/browse.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -11,53 +13,21 @@ import { BrowseService } from 'src/app/services/browse.service';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit, OnDestroy {
-  constructor(private browseService: BrowseService, authService: AuthService) {}
+  constructor(private browseService: BrowseService, private authService: AuthService, private orderService: OrderService) {}
 
   ngOnInit(): void {
     //load again??
-
     //Subscription assignment
-    this.availableVehicleListSubscription = this.browseService
-      .getAvailableVehiclesAsObservable()
-      .subscribe(
-        (emittedVehicleList: Vehicle[]) =>
-          (this.availableVehiclesList = emittedVehicleList)
-      );
-        this.test();
-    }
-
-    async test(){
-      this.selectedVehicleTypeSubscription = this.browseService
-        .getSelectedVehicleTypeAsObservable()
-        .subscribe((vehicleType: VehicleType) => {
-          this.selectedVehicleType = vehicleType;
-          this.findMatchingVehicle(vehicleType);
-        });
+    // this.subscribeToAvailableVehicles();
+    // this.subscribeToSelectedVehicleType();
   }
 
-
-  //Subscription Properties
-  private availableVehicleListSubscription!: Subscription;
-  private selectedVehicleTypeSubscription!: Subscription;
-
-  //Vehicle Data Properties
-  public availableVehiclesList!: Vehicle[];
-
-  public selectedVehicleType!: VehicleType;
-  private matchingVehicle!: Vehicle;
-  //trash
-  findMatchingVehicle(selectedVehicleType: VehicleType) {
-    let test = this.availableVehiclesList.find(
-      (vehicle) => vehicle.vehicleTypeId == selectedVehicleType.vehicleTypeId
-    );
-
-    debugger;
-    console.log(this.selectedVehicleType);
+  order(){
+    this.orderService.executeOrder()
   }
-
   ngOnDestroy(): void {
     //Unsubscribing Vehicle Observables
-    this.availableVehicleListSubscription.unsubscribe();
-    this.selectedVehicleTypeSubscription.unsubscribe();
+    //this.availableVehicleListSubscription.unsubscribe();
+    //this.selectedVehicleTypeSubscription.unsubscribe();
   }
 }
