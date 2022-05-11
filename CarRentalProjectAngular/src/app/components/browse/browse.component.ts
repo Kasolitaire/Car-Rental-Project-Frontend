@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { debounceTime, Observable, Subscription } from 'rxjs';
 import { Vehicle } from 'src/app/models/vehicle';
 import { VehicleFilterRequirements } from 'src/app/models/vehicle-filter-requirements';
@@ -14,9 +15,11 @@ import { BrowseService } from 'src/app/services/browse.service';
 export class BrowseComponent implements OnInit, OnDestroy {
   constructor(
     private browseService: BrowseService,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
+  //Move logic into separate function too crowded
   ngOnInit(): void {
     //HTTP requests
     this.browseService.loadAllAvailableVehicles();
@@ -59,6 +62,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
         }
       );
     this.vehicleFilterRequirements = this.vehicleFilterRequirementsFormGroup.value;
+  }
+
+  passSelectedVehicleType(selectedVehicleType: VehicleType){
+    this.browseService.emitSelectedVehicle(selectedVehicleType);
+    this.router.navigate(['/', 'order']);
   }
 
   //Subscription Properties
