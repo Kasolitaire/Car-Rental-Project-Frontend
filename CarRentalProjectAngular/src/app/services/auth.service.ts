@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginCredentials } from '../models/login-credentials';
 import { User } from '../models/user';
@@ -16,7 +16,7 @@ export class AuthService {
   serverURL: string;
 
   //Emits any user retrieved
-  private userSubject$: Subject<User> = new Subject<User>();
+  private userReplay: ReplaySubject<User> = new ReplaySubject<User>(1);
 
   //Emits a boolean value stating that a user is logged in
   private userLoginStatus$: BehaviorSubject<boolean> =
@@ -31,8 +31,8 @@ export class AuthService {
     );
 
     try {
-      const user: User = await firstValueFrom(user$);
-      this.userSubject$.next(user);
+      const user: User = await firstValueFrom(user$.pipe());
+      this.userReplay.next(user);
       this.userLoginStatus$.next(true);
       this.adminCheck(user);
     } catch (error) {
@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   userAsObservable(): Observable<User>{
-    return this.userSubject$.asObservable();
+    return this.userReplay.asObservable();
   }
 
   //Returns an Observable of user login status

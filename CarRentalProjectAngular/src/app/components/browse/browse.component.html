@@ -1,14 +1,14 @@
 <!-- {{availableVehiclesList|json}}
 {{availableVehicleTypesList|json}} -->
 
-<form [formGroup]="vehicleFilterRequirements" >
+<form [formGroup]="vehicleFilterRequirementsFormGroup" >
   <mat-form-field>
     <input matInput formControlName="generalRequirement">
   </mat-form-field>
 
   <div formGroupName="vehicleRequirements">
     <mat-form-field>
-      <input matInput formControlName="brandName">
+      <input matInput formControlName="brandName" placeholder="name..">
     </mat-form-field>
 
     <mat-form-field>
@@ -24,3 +24,10 @@
     </mat-form-field>
   </div>
 </form>
+{{vehicleFilterRequirements|json}} <hr>
+{{availableVehicleTypesList|json}}
+<hr>
+<div *ngFor="let vehicle of availableVehicleTypesList">
+  <div *ngIf="vehicle|browse:vehicleFilterRequirements">{{vehicle|json}}</div>
+  <button (click)="passSelectedVehicleType(vehicle)">send</button>
+</div>
