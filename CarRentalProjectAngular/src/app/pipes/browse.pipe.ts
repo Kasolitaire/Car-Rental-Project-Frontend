@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { map, of } from 'rxjs';
 import {
   VehicleFilterRequirements,
   VehicleRequirements,

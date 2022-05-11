@@ -1,8 +1,8 @@
-export interface RentalOrderDetail {
-  orderId: number;
+export interface OrderDetail {
+  orderId?: number;
   pickUpDate: string;
   dropOffDate: string;
-  dateOfficiallyReturned: string;
+  dateOfficiallyReturned?: string | null;
   userId: number;
   serialNumber: string;
 }
