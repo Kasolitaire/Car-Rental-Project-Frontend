@@ -11,7 +11,6 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService) {}
   loginStatus$!: Observable<boolean>;
   adminStatus$!: Observable<boolean>;
-  adminAuth$!: Observable<boolean>;
   ngOnInit(): void {
     this.loginStatus$ = this.authService.loginStatusAsObservable();
     this.adminStatus$ = this.authService.adminStatusAsObservable();

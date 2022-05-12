@@ -12,6 +12,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './components/admin/admin.component';
+import { BrowsePipe } from './pipes/browse.pipe';
+import { OrderComponent } from './components/order/order.component';
+import { UserOrderComponent } from './components/user-order/user-order.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { AdminComponent } from './components/admin/admin.component';
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    AdminComponent
+    AdminComponent,
+    BrowsePipe,
+    OrderComponent,
+    UserOrderComponent
   ],
   imports: [
     BrowserModule,

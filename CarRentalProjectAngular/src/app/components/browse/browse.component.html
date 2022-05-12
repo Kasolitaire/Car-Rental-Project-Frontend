@@ -1,0 +1,33 @@
+<!-- {{availableVehiclesList|json}}
+{{availableVehicleTypesList|json}} -->
+
+<form [formGroup]="vehicleFilterRequirementsFormGroup" >
+  <mat-form-field>
+    <input matInput formControlName="generalRequirement">
+  </mat-form-field>
+
+  <div formGroupName="vehicleRequirements">
+    <mat-form-field>
+      <input matInput formControlName="brandName" placeholder="name..">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="model">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="dateManufactured">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="gear">
+    </mat-form-field>
+  </div>
+</form>
+{{vehicleFilterRequirements|json}} <hr>
+{{availableVehicleTypesList|json}}
+<hr>
+<div *ngFor="let vehicle of availableVehicleTypesList">
+  <div *ngIf="vehicle|browse:vehicleFilterRequirements">{{vehicle|json}}</div>
+  <button (click)="passSelectedVehicleType(vehicle)">send</button>
+</div>

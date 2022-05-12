@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { debounceTime, Subscription } from 'rxjs';
 import { Vehicle } from 'src/app/models/vehicle';
+import { VehicleFilterRequirements } from 'src/app/models/vehicle-filter-requirements';
 import { VehicleType } from 'src/app/models/vehicle-type';
 import { BrowseService } from 'src/app/services/browse.service';
 
@@ -10,8 +13,13 @@ import { BrowseService } from 'src/app/services/browse.service';
   styleUrls: ['./browse.component.css'],
 })
 export class BrowseComponent implements OnInit, OnDestroy {
-  constructor(private browseService: BrowseService) {}
+  constructor(
+    private browseService: BrowseService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
+  //Move logic into separate function too crowded
   ngOnInit(): void {
     //HTTP requests
     this.browseService.loadAllAvailableVehicles();
@@ -31,19 +39,55 @@ export class BrowseComponent implements OnInit, OnDestroy {
         (emittedVehicleTypeList: VehicleType[]) =>
           (this.availableVehicleTypesList = emittedVehicleTypeList)
       );
+
+    //Form Logic
+    const vehicleRequirements: FormGroup = this.formBuilder.group({
+      //Inner FormGroup
+      brandName: '',
+      model: '',
+      dateManufactured: '',
+      gear: '',
+    });
+    //Main FromGroup
+    this.vehicleFilterRequirementsFormGroup = this.formBuilder.group({
+      generalRequirement: '',
+      vehicleRequirements: vehicleRequirements,
+    });
+    //pipe
+    this.formSubscription = this.vehicleFilterRequirementsFormGroup.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(
+        (emittedVehicleFilterRequirements: VehicleFilterRequirements) => {
+          this.vehicleFilterRequirements = emittedVehicleFilterRequirements;
+        }
+      );
+    this.vehicleFilterRequirements = this.vehicleFilterRequirementsFormGroup.value;
+  }
+
+  passSelectedVehicleType(selectedVehicleType: VehicleType){
+    this.browseService.emitSelectedVehicle(selectedVehicleType);
+    this.router.navigate(['/', 'order']);
   }
 
   //Subscription Properties
   private vehicleSubscription!: Subscription;
   private vehicleTypeSubscription!: Subscription;
+  private formSubscription!: Subscription;
 
   //Vehicle Data Properties
   public availableVehiclesList!: Vehicle[];
   public availableVehicleTypesList!: VehicleType[];
 
+  //
+  public vehicleFilterRequirementsFormGroup!: FormGroup;
+  public vehicleFilterRequirements!: VehicleFilterRequirements;
+
   ngOnDestroy(): void {
-    //Unsubscribing
+    //Unsubscribing Vehicle Observables
     this.vehicleSubscription.unsubscribe();
     this.vehicleTypeSubscription.unsubscribe();
+
+    //Unsubscribing from FormGroup Observable
+    this.formSubscription.unsubscribe();
   }
 }
