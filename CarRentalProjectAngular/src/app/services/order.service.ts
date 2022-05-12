@@ -37,9 +37,10 @@ export class OrderService{
 
   private createOrder(matchingVehicle:Vehicle | undefined, currentUser: User){
     return {
+
     pickUpDate: "PickUpDate",
     dropOffDate:"DropOffDate",
-    userId: +currentUser.id,
+    userId: currentUser.userId,
     serialNumber: matchingVehicle?.serialNumber
     } as OrderDetail
   }
@@ -47,9 +48,9 @@ export class OrderService{
   async postOrder(order: OrderDetail, matchingVehicle:Vehicle | undefined){
     //post
     try {
-      debugger
       const response$ = this.httpClient.post(`${this.serverURL}User/PostNewOrder,${matchingVehicle?.vehicleId}`, order);
       console.log(await firstValueFrom(response$));
+      alert('Order was successful')
     }
     catch (error) {
       console.log((error as HttpErrorResponse));

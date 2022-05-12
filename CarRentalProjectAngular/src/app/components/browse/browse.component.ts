@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounceTime, Observable, Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { Vehicle } from 'src/app/models/vehicle';
 import { VehicleFilterRequirements } from 'src/app/models/vehicle-filter-requirements';
 import { VehicleType } from 'src/app/models/vehicle-type';
