@@ -1,2 +1,11 @@
 <p>order works!</p>
-<button (click)="order()">order</button>
+<mat-date-range-input [min]="minDate" [formGroup]="dateFormGroup" [rangePicker]="picker">
+  <input matStartDate formControlName="pickUpDate" placeholder="Start date">
+  <input matEndDate formControlName="dropOffDate" placeholder="End date">
+</mat-date-range-input>
+<mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+<mat-date-range-picker #picker></mat-date-range-picker>
+<button [disabled]="currentRentalPeriod == null" (click)="orderThenNavigate()">order</button>
+
+
