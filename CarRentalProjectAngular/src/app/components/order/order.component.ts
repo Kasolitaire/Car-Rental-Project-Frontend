@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { filter, Observable, Subscription } from 'rxjs';
+import { filter, firstValueFrom, Observable, Subscription } from 'rxjs';
 import { RentalPeriod } from 'src/app/models/rental-period';
 import { VehicleType } from 'src/app/models/vehicle-type';
+import { AuthService } from 'src/app/services/auth.service';
 import { BrowseService } from 'src/app/services/browse.service';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -14,6 +15,7 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class OrderComponent implements OnInit, OnDestroy {
   constructor(
+    private authService: AuthService,
     private browseService: BrowseService,
     private orderService: OrderService,
     private router: Router,
@@ -21,17 +23,22 @@ export class OrderComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+      this.loginStatus$ = this.authService.loginStatusAsObservable();
       this.selectedVehicleType$ = this.browseService.getSelectedVehicleTypeAsObservable();
       this.createFormGroup();
       this.subscribeToFormChanges();
     }
+    public loginStatus$!: Observable<boolean>;
+    //  Contains the user selected vehicle
+    public selectedVehicleType$!: Observable<VehicleType>;
 
+    //  Calculated total cost
+    public totalCost!: number;
     //  The initial date for pickUpDate
     public minDate: Date = new Date();
     //  The date that gets sent to the server
-    public currentRentalPeriod: RentalPeriod | null = null;
-    //  Contains the user selected vehicle
-    public selectedVehicleType$!: Observable<VehicleType>;
+
+    public currentRentalPeriod!: RentalPeriod;
     //  Contains created form group
     public dateFormGroup!: FormGroup;
     //  Subscription to the date form
@@ -58,25 +65,20 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.calculateTotalRentalCost(emittedRentalPeriod);
       });
   }
-
-  calculateTotalRentalCost(rentalPeriod: RentalPeriod) {
+  //  Calculates the total cost
+  async calculateTotalRentalCost(rentalPeriod: RentalPeriod) {
     const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
     const differenceInMilliseconds =
       rentalPeriod.dropOffDate.getTime() - rentalPeriod.pickUpDate.getTime();
     const differenceInDays = Math.round((differenceInMilliseconds / oneDayInMilliseconds) + 1);
     console.log(differenceInDays);
-    this.browseService
-      .getSelectedVehicleTypeAsObservable()
-      .subscribe((value) =>
-        console.log(
-          value.costPerDay * differenceInDays
-        )
-      ).unsubscribe();
+    const selectedType: VehicleType =  await firstValueFrom(this.selectedVehicleType$);
+    this.totalCost = selectedType.costPerDay * differenceInDays;
+    //this.selectedVehicleType$.subscribe((selectedType: VehicleType) =>  {selectedType.costPerDay * differenceInDays} ).unsubscribe();
   }
 
-  orderThenNavigate() {
-    //this.orderService.executeOrder();
-    //debugger;
+  orderThenNavigate(currentRentalPeriod: RentalPeriod) {
+    this.orderService.executeOrder(currentRentalPeriod);
     this.router.navigate(['/', 'userOrders']);
   }
   ngOnDestroy(): void {
