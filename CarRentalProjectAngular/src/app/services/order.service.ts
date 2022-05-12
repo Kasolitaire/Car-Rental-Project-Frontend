@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable, zip } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OrderDetail } from '../models/order';
+import { RentalPeriod } from '../models/rental-period';
 import { User } from '../models/user';
 import { Vehicle } from '../models/vehicle';
 import { VehicleType } from '../models/vehicle-type';
@@ -18,13 +19,13 @@ export class OrderService{
 
   serverURL:String = environment.serverURL;
 
-  async executeOrder(){
+  async executeOrder(currentRentalPeriod: RentalPeriod){
     const availableVehicles$: Observable<Vehicle[]> = this.browseService.getAvailableVehiclesAsObservable()
     const selectedVehicleType$: Observable<VehicleType> = this.browseService.getSelectedVehicleTypeAsObservable()
     const currentUser$: Observable<User> = this.authService.userAsObservable()
     zip(availableVehicles$, selectedVehicleType$, currentUser$).subscribe(([emittedVehicles, emittedType, emittedUser]) =>{
       const matchingVehicle:Vehicle | undefined = this.findMatchingVehicle(emittedVehicles, emittedType);
-      const order = this.createOrder(matchingVehicle, emittedUser);
+      const order = this.createOrder(matchingVehicle, emittedUser, currentRentalPeriod);
       this.postOrder(order, matchingVehicle)
     }).unsubscribe();
   }
@@ -35,11 +36,10 @@ export class OrderService{
     );
   }
 
-  private createOrder(matchingVehicle:Vehicle | undefined, currentUser: User){
+  private createOrder(matchingVehicle:Vehicle | undefined, currentUser: User, currentRentalPeriod: RentalPeriod){
     return {
-
-    pickUpDate: "PickUpDate",
-    dropOffDate:"DropOffDate",
+    pickUpDate: currentRentalPeriod.pickUpDate.toLocaleDateString(),
+    dropOffDate:currentRentalPeriod.dropOffDate.toLocaleDateString(),
     userId: currentUser.userId,
     serialNumber: matchingVehicle?.serialNumber
     } as OrderDetail
