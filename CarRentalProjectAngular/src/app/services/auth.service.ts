@@ -18,11 +18,14 @@ export class AuthService {
   //Emits any user retrieved
   private userReplay: ReplaySubject<User> = new ReplaySubject<User>(1);
 
-  //Emits a boolean value stating that a user is logged in
+  //  Emits a boolean value stating that a user is logged in
   private userLoginStatus$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  //Emits a boolean value stating that an admin is logged in
+  //  Emits a boolean value stating that an admin is logged in
   private adminLoginStatus$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  //  Emits a boolean value stating that an employee is logged in
+  private employeeLoginStatus$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   async loadUser(loginCredentials: LoginCredentials) {
@@ -34,7 +37,7 @@ export class AuthService {
       const user: User = await firstValueFrom(user$.pipe());
       this.userReplay.next(user);
       this.userLoginStatus$.next(true);
-      this.adminCheck(user);
+      this.roleCheck(user);
     } catch (error) {
       //Needs to be more meaningful
       console.log((error as HttpErrorResponse).status);
@@ -42,10 +45,15 @@ export class AuthService {
     // this.httpClient.post("google.com", {} ).subscribe(t => { this.RegistrationComplete = (t as boolean); } )
   }
 
-  //Checks if the user is an admin
-  adminCheck(user: User) {
+  //  Checks if the user is an admin or employee
+  roleCheck(user: User) {
     if (user.userRole == 'admin') {
       this.adminLoginStatus$.next(true);
+      this.employeeLoginStatus$.next(true);
+    }
+
+    if (user.userRole == 'employee') {
+      this.employeeLoginStatus$.next(true);
     }
   }
 
@@ -53,20 +61,25 @@ export class AuthService {
     return this.userReplay.asObservable();
   }
 
-  //Returns an Observable of user login status
+  //  Returns an Observable of user login status
   loginStatusAsObservable(): Observable<boolean> {
     return this.userLoginStatus$.asObservable();
   }
 
-  //Return an Observable of admin login status
+  //  Return an Observable of admin login status
   adminStatusAsObservable(): Observable<boolean> {
     return this.adminLoginStatus$.asObservable();
   }
 
-  //Logs any user out of the system
+  //  Return an Observable of employee login status
+  employeeStatusAsObservable(): Observable<boolean> {
+    return this.employeeLoginStatus$.asObservable();
+  }
+
+  //  Logs any user out of the system
   logoutService() {
     this.userLoginStatus$.next(false);
     this.adminLoginStatus$.next(false);
-    //Might need further implementation
+    //  Might need further implementation
   }
 }
