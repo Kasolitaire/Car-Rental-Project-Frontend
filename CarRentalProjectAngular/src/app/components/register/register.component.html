@@ -1,23 +1,53 @@
-<form>
+<h1>{{registerForm.valid}}</h1>
+<h1>{{registerForm.errors|json}}dd</h1>
+<form [formGroup]="registerForm" (ngSubmit)="registerUser()">
   <div class="container">
+
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
+
     <hr>
 
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" >
+    <label><b>Username</b></label>
+    <input class ='regular' type="text" placeholder="Enter Username" formControlName="username">
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" >
+    <label><b>Email</b></label>
+    <input class ='regular' type="text" placeholder="Enter Email" formControlName="email">
 
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" >
-    <hr>
+    <label><b>Full Name</b></label>
+    <input class ='regular' type="text" placeholder="Enter Full Name" formControlName="fullName">
 
-    <button type="submit" class="registerButton">Register</button>
+    <label><b>ID</b></label>
+    <input class ='regular' type="text" placeholder="ID" formControlName="id">
+
+    <label style="width: 55%;"><b>Gender</b></label>
+    <label><b>Birth Date</b></label>
+
+    <br>
+
+    <select formControlName="gender">
+      <option value="" disabled selected>Select your Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <mat-form-field style="margin-left: 10%; width: 40%;" appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input [max]="maxDate" readonly matInput [matDatepicker]="picker" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker >
+    </mat-form-field>
+
+    <br>
+
+    <label><b>Password</b></label>
+    <input class ='regular' type="password" placeholder="Enter Password" formControlName="password">
+
+    <button [disabled]="!registerForm.valid" type="submit" class="registerButton">Register</button>
   </div>
 
   <div class="container signin">
-    <p>Already have an account? <a href="#">Sign in</a>.</p>
+    <p>Already have an account? <a href="#">Login</a>.</p>
   </div>
 </form>

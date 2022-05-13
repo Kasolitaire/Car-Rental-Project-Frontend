@@ -1,4 +1,4 @@
-input {
+input.regular {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -7,6 +7,14 @@ input {
   background: #f1f1f1;
 }
 
+select {
+  width: 45%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
 .registerButton {
   background-color: #04AA6D;
   color: white;
