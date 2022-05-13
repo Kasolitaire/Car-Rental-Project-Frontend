@@ -54,6 +54,7 @@ export class OrderService{
     }
     catch (error) {
       console.log((error as HttpErrorResponse));
+      alert('Something went wrong')
     }
     finally{
       this.browseService.loadAllAvailableVehicleTypes();
