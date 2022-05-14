@@ -80,6 +80,7 @@ export class AuthService {
   logoutService() {
     this.userLoginStatus$.next(false);
     this.adminLoginStatus$.next(false);
+    this.employeeLoginStatus$.next(false);
     //  Might need further implementation
   }
 }

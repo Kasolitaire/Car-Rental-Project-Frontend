@@ -1,33 +1,60 @@
 <!-- {{availableVehiclesList|json}}
 {{availableVehicleTypesList|json}} -->
 
-<form [formGroup]="vehicleFilterRequirementsFormGroup" >
-  <mat-form-field>
-    <input matInput formControlName="generalRequirement">
-  </mat-form-field>
+<div class="container">
 
-  <div formGroupName="vehicleRequirements">
+  <form [formGroup]="vehicleFilterRequirementsFormGroup" >
     <mat-form-field>
-      <input matInput formControlName="brandName" placeholder="name..">
+      <input matInput formControlName="generalRequirement" placeholder="Search">
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="model">
-    </mat-form-field>
+    <div formGroupName="vehicleRequirements">
+      <mat-form-field>
+        <input matInput formControlName="brandName" placeholder="Brand">
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="dateManufactured">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="model" placeholder="Model">
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="gear">
-    </mat-form-field>
-  </div>
-</form>
-{{vehicleFilterRequirements|json}} <hr>
-{{availableVehicleTypesList|json}}
+      <mat-form-field>
+        <input matInput formControlName="dateManufactured" placeholder="Year">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="gear" placeholder="Gear">
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+
 <hr>
 <div *ngFor="let vehicle of availableVehicleTypesList">
-  <div *ngIf="vehicle|browse:vehicleFilterRequirements">{{vehicle|json}}</div>
-  <button (click)="passSelectedVehicleType(vehicle)">send</button>
+  <div *ngIf="vehicle|browse:vehicleFilterRequirements">{{vehicle|json}}
+
+    <button (click)="passSelectedVehicleType(vehicle)">send</button>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="card">
+    <img src="https://media.istockphoto.com/photos/generic-red-suv-on-a-white-background-side-view-picture-id1157655660?k=20&m=1157655660&s=612x612&w=0&h=WOtAthbmJ9iG1zbKo4kNUsAGMe6-xM-E7a8TMxb5xmk=" alt="">
+  </div>
+  <div class="card">
+    <img src="https://media.istockphoto.com/photos/generic-red-suv-on-a-white-background-side-view-picture-id1157655660?k=20&m=1157655660&s=612x612&w=0&h=WOtAthbmJ9iG1zbKo4kNUsAGMe6-xM-E7a8TMxb5xmk=" alt="">
+  </div>
+  <div class="card">
+    <img src="https://media.istockphoto.com/photos/generic-red-suv-on-a-white-background-side-view-picture-id1157655660?k=20&m=1157655660&s=612x612&w=0&h=WOtAthbmJ9iG1zbKo4kNUsAGMe6-xM-E7a8TMxb5xmk=" alt="">
+  </div>
+  <div class="card">
+    <img src="https://media.istockphoto.com/photos/generic-red-suv-on-a-white-background-side-view-picture-id1157655660?k=20&m=1157655660&s=612x612&w=0&h=WOtAthbmJ9iG1zbKo4kNUsAGMe6-xM-E7a8TMxb5xmk=" alt="">
+  </div>
+  <div class="card">
+    <img src="https://media.istockphoto.com/photos/generic-red-suv-on-a-white-background-side-view-picture-id1157655660?k=20&m=1157655660&s=612x612&w=0&h=WOtAthbmJ9iG1zbKo4kNUsAGMe6-xM-E7a8TMxb5xmk=" alt="">
+  </div>
+  <div class="card">
+    <img src="https://media.istockphoto.com/photos/generic-red-suv-on-a-white-background-side-view-picture-id1157655660?k=20&m=1157655660&s=612x612&w=0&h=WOtAthbmJ9iG1zbKo4kNUsAGMe6-xM-E7a8TMxb5xmk=" alt="">
+  </div>
+
+
 </div>
