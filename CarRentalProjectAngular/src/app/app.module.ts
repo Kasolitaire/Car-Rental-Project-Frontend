@@ -15,6 +15,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { BrowsePipe } from './pipes/browse.pipe';
 import { OrderComponent } from './components/order/order.component';
 import { UserOrderComponent } from './components/user-order/user-order.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { UserOrderComponent } from './components/user-order/user-order.component
     AdminComponent,
     BrowsePipe,
     OrderComponent,
-    UserOrderComponent
+    UserOrderComponent,
+    EmployeeComponent,
+    VehicleComponent
   ],
   imports: [
     BrowserModule,
