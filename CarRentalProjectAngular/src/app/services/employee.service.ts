@@ -36,12 +36,12 @@ export class EmployeeService {
 
   async returnVehicleRequest(order: OrderDetail){
     try {
-      const response$ = this.httpClient.put(`${this.serverURL}`, order);
-      return await firstValueFrom(response$);
+      const response$ = this.httpClient.put(`${this.serverURL}Employee/CloseOrder`, order);
+      await firstValueFrom(response$);
+      return null;
     } catch (error) {
       console.log(error as HttpErrorResponse);
-      return null;
+      return error as HttpErrorResponse;
     }
   }
-
 }
