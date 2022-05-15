@@ -77,9 +77,15 @@ export class OrderComponent implements OnInit, OnDestroy {
     //this.selectedVehicleType$.subscribe((selectedType: VehicleType) =>  {selectedType.costPerDay * differenceInDays} ).unsubscribe();
   }
 
-  orderThenNavigate(currentRentalPeriod: RentalPeriod) {
-    this.orderService.executeOrder(currentRentalPeriod);
-    this.router.navigate(['/', 'userOrders']);
+  async orderThenNavigate(currentRentalPeriod: RentalPeriod) {
+    const loginStatus: boolean = await firstValueFrom(this.loginStatus$);
+    if(loginStatus){
+      this.orderService.executeOrder(currentRentalPeriod);
+      this.router.navigate(['/', 'userOrders']);
+    }
+    else{
+      this.router.navigate(['/','login']);
+    }
   }
   ngOnDestroy(): void {
     this.formSubscription.unsubscribe();

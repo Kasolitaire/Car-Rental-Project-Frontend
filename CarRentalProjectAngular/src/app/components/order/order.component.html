@@ -8,13 +8,16 @@
 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 <mat-date-range-picker #picker></mat-date-range-picker>
 
-<hr>
-<button [disabled]="currentRentalPeriod == null || !(loginStatus$ | async)" (click)="orderThenNavigate(currentRentalPeriod)">order</button>
-<hr>
 Total cost {{totalCost}}
 <br>
- cost per-day delayed <div *ngIf="(selectedVehicleType$ | async) as selectedVehicleType">
-  {{selectedVehicleType.costPerDayDelayed}}
+
+<div *ngIf="(selectedVehicleType$ | async) as selectedVehicleType" class="container">
+  cost per-day delayed{{selectedVehicleType.costPerDayDelayed}}
+  <app-vehicle [vehicle]="selectedVehicleType" ></app-vehicle>
 </div>
+
+<hr>
+<button [disabled]="currentRentalPeriod == null" (click)="orderThenNavigate(currentRentalPeriod)">order</button>
+<hr>
 
 
