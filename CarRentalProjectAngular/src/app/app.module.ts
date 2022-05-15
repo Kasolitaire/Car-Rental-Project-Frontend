@@ -17,6 +17,7 @@ import { OrderComponent } from './components/order/order.component';
 import { UserOrderComponent } from './components/user-order/user-order.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { VehicleComponent } from './components/vehicle/vehicle.component';
+import { PreviouslySelectedPipe } from './pipes/previously-selected.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { VehicleComponent } from './components/vehicle/vehicle.component';
     OrderComponent,
     UserOrderComponent,
     EmployeeComponent,
-    VehicleComponent
+    VehicleComponent,
+    PreviouslySelectedPipe
   ],
   imports: [
     BrowserModule,
