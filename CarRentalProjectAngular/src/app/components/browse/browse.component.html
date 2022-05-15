@@ -38,3 +38,16 @@
   </div>
 </div>
 
+<h1>previously Selected Vehicles</h1>
+
+<div class="wrapper">
+  <div *ngFor="let vehicleType of availableVehicleTypesList" >
+    <div *ngIf="vehicleType|previouslySelected">
+      <app-vehicle  class="card" [vehicle]="vehicleType"> </app-vehicle>
+      <button (click)="passSelectedVehicleType(vehicleType)">Choose</button>
+    </div>
+  </div>
+</div>
+
+
+
