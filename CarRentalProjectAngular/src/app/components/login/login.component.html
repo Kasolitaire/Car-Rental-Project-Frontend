@@ -4,7 +4,7 @@
   password<input formControlName="password">
   <button [disabled]="loginCredentialsForm.invalid" (click)="login(loginCredentialsForm.value)">Login</button>
 </form>
-<button *ngIf="(loginStatus$ | async)" (click)="logout()">Logout </button>
+
 
 
 

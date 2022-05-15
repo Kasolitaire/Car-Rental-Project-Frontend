@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { firstValueFrom, Observable } from 'rxjs';
 import { LoginCredentials } from 'src/app/models/login-credentials';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -12,7 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   loginStatus$!: Observable<boolean>;
@@ -31,11 +33,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(loginCredentials: LoginCredentials) {
+  async login(loginCredentials: LoginCredentials) {
     this.authService.loadUser(loginCredentials)
-  }
-
-  logout() {
-    this.authService.logoutService();
+    const loginStatus: boolean = await firstValueFrom(this.loginStatus$);
+    if(loginStatus) return;
+    this.router.navigate(['/', 'browse']);
   }
 }
