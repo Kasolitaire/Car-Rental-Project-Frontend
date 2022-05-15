@@ -8,11 +8,12 @@ Login: {{loginStatus$ | async}}
     <mat-icon>home</mat-icon> Browse
   </button>
   <button mat-raised-button routerLink="about" >About</button>
-  <button mat-raised-button routerLink="login" class="test">Login</button>
+  <button *ngIf="!(loginStatus$ | async)" mat-raised-button routerLink="login" class="test">Login</button>
   <button *ngIf="!(loginStatus$ | async)" mat-raised-button routerLink="register" >Register</button>
   <button mat-raised-button routerLink="admin">Admin</button>
-  <button mat-raised-button routerLink="userOrders">Orders</button>
-  <button mat-raised-button routerLink="employee">Return Vehicle</button>
+  <button *ngIf="(loginStatus$ | async)" mat-raised-button routerLink="userOrders">View Orders</button>
+  <button *ngIf="(employeeStatus$ | async)" mat-raised-button routerLink="employee">Return Vehicle</button>
+  <button *ngIf="(loginStatus$ | async)" mat-raised-button (click)="logout()">Logout </button>
 </mat-toolbar>
 
 
