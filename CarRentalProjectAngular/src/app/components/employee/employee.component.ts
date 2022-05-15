@@ -23,7 +23,6 @@ export class EmployeeComponent implements OnInit {
     this.calendarControlGroup.valueChanges.pipe(filter(() => this.calendarControlGroup.valid)).subscribe((returnDate) => {
       this.processDates(returnDate.date as string)
     });
-
   }
 
   calendarControlGroup!: FormGroup;
@@ -36,6 +35,7 @@ export class EmployeeComponent implements OnInit {
 
   totalDelayCost!: number;
   totalCost!: number;
+  private selectedDate!: string;
 
   async matchingOrderRequest(serialNumber: string){
     const matchingOrder: OrderDetail | null = await this.employeeService.getMatchingOrder(serialNumber);
@@ -61,8 +61,16 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  returnVehicle(order: OrderDetail){
-    this.employeeService.returnVehicleRequest(order);
+  async returnVehicle(order: OrderDetail){
+    order.dateOfficiallyReturned = this.selectedDate;
+    debugger
+    const result = await this.employeeService.returnVehicleRequest(order);
+    if(result){
+      alert(result.error);
+    }
+    else{
+      alert('Vehicle successfully returned')
+    }
   }
 
   processDates(returnDateString: string){
@@ -70,6 +78,7 @@ export class EmployeeComponent implements OnInit {
     const dropOffDate: Date = this.convertDate(this.currentMatchingOrder.dropOffDate);
     this.totalCost = this.calculateRentalCost(this.currentMatchingOrder, this.currentMatchingVehicleType);
     this.totalDelayCost = this.totalDelayCostCalculation(dropOffDate, returnDate, this.currentMatchingVehicleType);
+    this.selectedDate = new Date(returnDate).toLocaleDateString();
   }
 
   totalDelayCostCalculation(dropOffDate: Date, ReturnDate: Date, currentType: VehicleType):number {

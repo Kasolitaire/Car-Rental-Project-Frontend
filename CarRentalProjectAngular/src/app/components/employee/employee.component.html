@@ -11,23 +11,23 @@ ser {{serialNumberFromControl.valid}}
   <h1>Employee Section</h1>
 
   <label><b>Please Enter Vehicle Serial Number</b></label>
-  <input class="regular" type="text" placeholder="Serial Number" [formControl]="serialNumberFromControl" (ngSubmit)="returnVehicle(currentMatchingOrder)">
+  <input class="regular" type="text" placeholder="Serial Number" [formControl]="serialNumberFromControl">
   <button (click)="matchingOrderRequest(serialNumberFromControl.value)">Check For Order</button>
 
   <hr>
 
-  <mat-form-field style="margin-left: 10%; width: 50%;" appearance="fill" [formGroup]="calendarControlGroup" >
+  <mat-form-field style="margin-left: 10%; width: 50%;" appearance="fill" [formGroup]="calendarControlGroup">
 
     <mat-label>Choose a return date for total cost</mat-label>
-    <input  readonly matInput [matDatepicker]="picker" [min]="minDate" formControlName="date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker >
+      <input  readonly matInput [matDatepicker]="picker" [min]="minDate" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker >
 
       <hr>
 
-     <h2 [hidden]="!totalCost">Total cost delay included: <b>{{totalCost + totalDelayCost}} ₪</b></h2>
+      <h2 [hidden]="!totalCost">Total cost delay included: <b>{{totalCost + totalDelayCost}} ₪</b></h2>
 
-      <button [hidden]="!calendarControlGroup.valid" class="red">Mark Vehicle as returned</button>
+      <button [hidden]="!calendarControlGroup.valid" class="red" (click)="returnVehicle(currentMatchingOrder)">Mark Vehicle as returned</button>
     </mat-form-field>
 
 </div>
