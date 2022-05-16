@@ -27,22 +27,16 @@ export class ManageOrdersComponent implements OnInit {
   private serverURL: string = environment.serverURL;
   orderUpdateDetails: OrderDetail = {
     orderId: 0,
-    pickUpDate: "string",
-    dropOffDate: "string",
-    dateOfficiallyReturned: "string",
+    pickUpDate: "",
+    dropOffDate: "",
+    dateOfficiallyReturned: "",
     userId: 0,
-    serialNumber: "string"
+    serialNumber: ""
   }
 
   getOrders(){
     const response$ = this.httpClient.get<OrderDetail[]>(`${this.serverURL}Admin/RentalOrderDetails`);
     this.orders$ = response$;
-  }
-
-  defaultDetails(order: OrderDetail){
-    this.orderUpdateDetails = order
-    this.createUpdateForm();
-    this.showForm = true;
   }
 
   async deleteOrder(order: OrderDetail){
@@ -51,6 +45,12 @@ export class ManageOrdersComponent implements OnInit {
      await firstValueFrom(response$);
      this.getOrders();
     }
+  }
+
+  defaultDetails(order: OrderDetail){
+    this.orderUpdateDetails = order
+    this.createUpdateForm();
+    this.showForm = true;
   }
 
   createUpdateForm(){
@@ -78,5 +78,29 @@ export class ManageOrdersComponent implements OnInit {
       alert((error as HttpErrorResponse).error);
     }
     this.getOrders();
+  }
+
+  async createNewOrder(){
+    try {
+      if(confirm('Confirm to create vehicle')){
+        this.orderUpdateDetails = this.orderUpdateForm.value;
+        this.orderUpdateDetails.pickUpDate = new Date(this.orderUpdateDetails.pickUpDate).toLocaleDateString('en-US');
+        this.orderUpdateDetails.dropOffDate = new Date(this.orderUpdateDetails.dropOffDate).toLocaleDateString('en-US');
+        if(this.orderUpdateDetails.dateOfficiallyReturned) this.orderUpdateDetails.dateOfficiallyReturned = new Date(this.orderUpdateDetails.dateOfficiallyReturned as string).toLocaleDateString('en-US');
+
+        const response$ = this.httpClient.post(`${this.serverURL}Admin/PostNewOrder`, this.orderUpdateDetails);
+        await firstValueFrom(response$);
+      }
+    }
+    catch (error) {
+      alert((error as HttpErrorResponse).error);
+    }
+    finally{
+      this.getOrders();
+    }
+  }
+
+  showFormOnClick(){
+    this.showForm = true;
   }
 }

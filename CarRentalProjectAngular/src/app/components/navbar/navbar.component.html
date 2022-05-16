@@ -3,20 +3,29 @@ Admin: {{adminStatus$ | async}}
 Employee: {{employeeStatus$ | async}}
 <br>
 Login: {{loginStatus$ | async}}
-<mat-toolbar color="primary" aria-label="NavBar">
-  <button mat-raised-button routerLink="browse" aria-label="Browse Navigate">
+<!-- <mat-toolbar color="primary" aria-label="NavBar">
+  <button  routerLink="browse" aria-label="Browse Navigate">
     <mat-icon>home</mat-icon> Browse
   </button>
-  <button mat-raised-button routerLink="about" >About</button>
-  <button *ngIf="!(loginStatus$ | async)" mat-raised-button routerLink="login" class="test">Login</button>
-  <button *ngIf="!(loginStatus$ | async)" mat-raised-button routerLink="register" >Register</button>
-  <button mat-raised-button routerLink="admin">Admin</button>
-  <button *ngIf="(loginStatus$ | async)" mat-raised-button routerLink="userOrders">View Orders</button>
-  <button *ngIf="(employeeStatus$ | async)" mat-raised-button routerLink="employee">Return Vehicle</button>
-  <button *ngIf="(loginStatus$ | async)" mat-raised-button (click)="logout()">Logout </button>
-</mat-toolbar>
+  <button  routerLink="about" >About</button>
+  <button *ngIf="!(loginStatus$ | async)"  routerLink="login" >Login</button>
+  <button *ngIf="!(loginStatus$ | async)"  routerLink="register" >Register</button>
+  <button *ngIf="(adminStatus$ | async)"  routerLink="admin">Admin</button>
+  <button *ngIf="(loginStatus$ | async)"  routerLink="userOrders">View Orders</button>
+  <button *ngIf="(employeeStatus$ | async)"  routerLink="employee">Return Vehicle</button>
+  <button *ngIf="(loginStatus$ | async)"  (click)="logout()">Logout </button>
+</mat-toolbar> -->
 
 
-
+<ul class="topnav">
+  <li><a routerLink="browse">Browse </a></li>
+  <li><a routerLink="about">About</a></li>
+  <li class="right " *ngIf="(loginStatus$ | async)"  (click)="logout()"><a class="active">Logout</a></li>
+  <li class="right" *ngIf="!(loginStatus$ | async)" routerLink="login"><a class="active">Login</a></li>
+  <li class="right" *ngIf="!(loginStatus$ | async)" routerLink="register"><a>Register</a></li>
+  <li class="right" *ngIf="(adminStatus$ | async)" routerLink="admin"><a>Admin </a></li>
+  <li class="right" *ngIf="(employeeStatus$ | async)" routerLink="employee"><a>Return Vehicle</a></li>
+  <li class="right" *ngIf="(loginStatus$ | async)"  routerLink="userOrders"><a>View Orders</a></li>
+</ul>
 
 

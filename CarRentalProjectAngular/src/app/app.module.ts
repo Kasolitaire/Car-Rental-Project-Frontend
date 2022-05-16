@@ -20,6 +20,8 @@ import { VehicleComponent } from './components/vehicle/vehicle.component';
 import { PreviouslySelectedPipe } from './pipes/previously-selected.pipe';
 import { ManageUsersComponent } from './components/admin-components/manage-users/manage-users.component';
 import { ManageOrdersComponent } from './components/admin-components/manage-orders/manage-orders.component';
+import { ManageVehicleTypesComponent } from './components/admin-components/manage-vehicle-types/manage-vehicle-types.component';
+import { ManageVehicleInventoryComponent } from './components/admin-components/manage-vehicle-inventory/manage-vehicle-inventory.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { ManageOrdersComponent } from './components/admin-components/manage-orde
     VehicleComponent,
     PreviouslySelectedPipe,
     ManageUsersComponent,
-    ManageOrdersComponent
+    ManageOrdersComponent,
+    ManageVehicleTypesComponent,
+    ManageVehicleInventoryComponent
   ],
   imports: [
     BrowserModule,

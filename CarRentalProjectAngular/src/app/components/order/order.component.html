@@ -1,23 +1,28 @@
-<p>order works!</p>
+<div class="container">
+  <div class="card">
+    <mat-form-field appearance="fill" >
+      <mat-date-range-input [min]="minDate" [formGroup]="dateFormGroup" [rangePicker]="picker">
+        <input readonly matStartDate formControlName="pickUpDate" placeholder="Start date">
+        <input readonly matEndDate formControlName="dropOffDate" placeholder="End date">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
 
-<mat-date-range-input [min]="minDate" [formGroup]="dateFormGroup" [rangePicker]="picker">
-  <input matStartDate formControlName="pickUpDate" placeholder="Start date">
-  <input matEndDate formControlName="dropOffDate" placeholder="End date">
-</mat-date-range-input>
-<mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-<mat-date-range-picker #picker></mat-date-range-picker>
+    <h2 *ngIf="totalCost" >
+      Total: <b>{{totalCost}}₪</b>
+    </h2>
 
-Total cost {{totalCost}}
-<br>
+    <h2 *ngIf="(selectedVehicleType$ | async) as selectedVehicleType">
+      Cost Per-Day Delayed: <b>{{selectedVehicleType.costPerDayDelayed}}₪</b>
+    </h2>
 
-<div *ngIf="(selectedVehicleType$ | async) as selectedVehicleType" class="container">
-  cost per-day delayed{{selectedVehicleType.costPerDayDelayed}}
-  <app-vehicle [vehicle]="selectedVehicleType" ></app-vehicle>
+  </div>
+
+  <div *ngIf="(selectedVehicleType$ | async) as selectedVehicleType" >
+    <app-vehicle class="card" [vehicle]="selectedVehicleType" ></app-vehicle>
+    <button [disabled]="currentRentalPeriod == null" (click)="orderThenNavigate(currentRentalPeriod)">order</button>
+  </div>
+
 </div>
-
-<hr>
-<button [disabled]="currentRentalPeriod == null" (click)="orderThenNavigate(currentRentalPeriod)">order</button>
-<hr>
-
 

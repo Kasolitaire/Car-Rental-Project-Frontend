@@ -27,6 +27,7 @@ export class BrowsePipe implements PipeTransform {
       }
     }
 
-    return vehicleDataList.includes(vehicleFilterRequirements.generalRequirement.toUpperCase()) || vehicleFilterRequirements.generalRequirement == '';
+    const requirement: string = vehicleFilterRequirements.generalRequirement.toUpperCase();
+    return vehicleDataList.find(data => data.includes(requirement) || requirement == '')? true : false;
   }
 }

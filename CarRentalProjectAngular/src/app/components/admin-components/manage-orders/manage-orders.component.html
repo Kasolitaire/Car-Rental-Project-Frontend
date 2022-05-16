@@ -1,3 +1,7 @@
+<div class="container">
+  <button (click)="showFormOnClick()" class="registerButton blue">Show Form</button>
+</div>
+
 <div class="table-wrapper">
   <table class="fl-table">
     <thead>
@@ -22,11 +26,9 @@
       </tr>
     </tbody>
   </table>
-
-
 </div>
 
-<form class="container" [formGroup]="orderUpdateForm" [hidden]="!showForm" (ngSubmit)="updateOrder()">
+<form class="container" [formGroup]="orderUpdateForm" [hidden]="!showForm">
   <mat-form-field appearance="fill" style="width: 45%">
     <mat-date-range-input [formGroup]="orderUpdateForm" [rangePicker]="multiPicker">
       <input matStartDate formControlName="pickUpDate" [placeholder]="orderUpdateDetails.pickUpDate">
@@ -49,10 +51,10 @@
   <input class ='regular' type="number" placeholder="User ID" formControlName="userId">
 
   <label><b>Serial Number</b></label>
-  <input class ='regular' type="text" placeholder="User ID" formControlName="serialNumber">
+  <input class ='regular' type="text" placeholder="Serial Number" formControlName="serialNumber">
 
-  <button type="submit" class="registerButton">Update Order</button>
-
+  <button class="registerButton" (click)="updateOrder()">Update Order</button>
+  <button class="registerButton blue" (click)="createNewOrder()">Create New Order</button>
 </form>
 
 

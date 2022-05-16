@@ -140,13 +140,14 @@ input.regular {
 }
 
 select {
-  width: 45%;
+  width: 30%;
   padding: 15px;
-  margin: 5px 0 22px 0;
+  margin-left: 2%;
   display: inline-block;
   border: none;
   background: #f1f1f1;
 }
+
 .registerButton {
   border-radius: 50px;
   background-color: #04AA6D;
@@ -163,34 +164,11 @@ select {
   background-color: #3f51b5;
 }
 
-input.regular {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
-
-select {
-  width: 45%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
-.registerButton {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
-  margin: 8px 0;
-  border: none;
+.pointer{
   cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
 }
 
-.purple{
-  background-color: plum;
+.third{
+  width: 30%;
+  margin-left: 2%;
 }

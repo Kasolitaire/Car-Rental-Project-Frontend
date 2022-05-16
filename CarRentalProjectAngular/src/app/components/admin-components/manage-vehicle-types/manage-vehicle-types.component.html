@@ -1,0 +1,70 @@
+
+<div class="container">
+  <button (click)="showFormOnClick()" class="registerButton blue">Show Form</button>
+</div>
+
+<div class="table-wrapper">
+  <table class="fl-table">
+    <thead>
+      <th>Vehicle Type ID</th>
+      <th>Brand Name</th>
+      <th>Model</th>
+      <th>Cost-Per-Day</th>
+      <th>Cost-Per-Delayed</th>
+      <th>Date Manufactured</th>
+      <th>Gear</th>
+
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let type of (vehicleTypes$ | async)">
+        <td>{{type.vehicleTypeId}}</td>
+        <td>{{type.brandName}}</td>
+        <td>{{type.model}}</td>
+        <td>{{type.costPerDay}}</td>
+        <td>{{type.costPerDayDelayed}}</td>
+        <td>{{type.dateManufactured}}</td>
+        <td>{{type.gear}}</td>
+
+        <td class="pointer" (click)="defaultDetails(type)"><b style="font-size: 20px;">Edit</b></td>
+        <td class="pointer" (click)="deleteVehicleType(type)"><b style="font-size: 20px;">Delete</b></td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container">
+  <form [hidden]="!showForm" [formGroup]="vehicleTypeUpdateForm">
+    <label class="third"><b>Brand Name</b></label>
+    <label class="third"><b>Model</b></label>
+    <label class="third"><b>Cost-Per-Day Delayed</b></label>
+
+    <input class='regular' type="text" placeholder="Brand Name" formControlName="brandName">
+
+    <input class='regular' type="text" placeholder="Model" formControlName="model">
+
+    <input class='regular' type="number" placeholder="Cost-Per-Day" formControlName="costPerDay">
+
+    <br>
+
+    <label class="third"> <b>Year</b></label>
+    <label class="third"> <b>Available</b></label>
+    <label class="third"> <b>Gear</b></label>
+
+    <br>
+
+    <input class='regular' type="number" placeholder="Cost-Per-Day Delayed" formControlName="costPerDayDelayed">
+
+    <input class='regular' type="number" placeholder="Year" formControlName="dateManufactured">
+
+    <select formControlName="gear">
+      <option value="automatic">Automatic</option>
+      <option value="manual">Manual</option>
+    </select>
+
+    <button [disabled]="!vehicleTypeUpdateForm.valid" (click)="updateVehicleType()" class="registerButton">Update Vehicle Type</button>
+
+    <button [disabled]="!vehicleTypeUpdateForm.valid" (click)="createNewVehicleType()" class="registerButton blue">Create New Vehicle Type</button>
+  </form>
+</div>

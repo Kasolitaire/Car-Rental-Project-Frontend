@@ -21,6 +21,8 @@ export class BrowseService {
   //Emits the selected vehicle
   private selectedVehicleTypeReplay$: ReplaySubject<VehicleType> = new ReplaySubject<VehicleType>(1);
 
+  private vehicleSelectedStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   //Retrieves all the available vehicles from the server
   async loadAllAvailableVehicles(){
     try {
@@ -46,6 +48,7 @@ export class BrowseService {
   }
 
   emitSelectedVehicle(selectedVehicleType: VehicleType){
+    this.vehicleSelectedStatus$.next(true);
     this.selectedVehicleTypeReplay$.next(selectedVehicleType);
   }
 
@@ -59,5 +62,9 @@ export class BrowseService {
 
   getAvailableVehicleTypesAsObservable(){
     return this.availableVehicleTypesSubject$.asObservable()
+  }
+
+  getVehicleSelectedStatusAsObservable(){
+    return this.vehicleSelectedStatus$.asObservable();
   }
 }
