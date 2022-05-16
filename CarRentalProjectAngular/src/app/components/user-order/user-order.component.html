@@ -9,12 +9,14 @@
       <th>serialNumber</th>
       <th>dateOfficiallyReturned</th>
     </thead>
-    <tr *ngFor="let order of (userOrders$ | async)">
-      <td>{{order.orderId}}</td>
-      <td>{{order.pickUpDate}}</td>
-      <td>{{order.dropOffDate}}</td>
-      <td>{{order.serialNumber}}</td>
-      <td>{{order.dateOfficiallyReturned}}</td>
-    </tr>
+    <tbody>
+      <tr *ngFor="let order of (userOrders$ | async)">
+        <td>{{order.orderId}}</td>
+        <td>{{order.pickUpDate}}</td>
+        <td>{{order.dropOffDate}}</td>
+        <td>{{order.serialNumber}}</td>
+        <td>{{order.dateOfficiallyReturned}}</td>
+      </tr>
+    </tbody>
   </table>
 </div>

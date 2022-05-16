@@ -1,6 +1,8 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
+import { ManageOrdersComponent } from './components/admin-components/manage-orders/manage-orders.component';
+import { ManageUsersComponent } from './components/admin-components/manage-users/manage-users.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { BrowseComponent } from './components/browse/browse.component';
 import { EmployeeComponent } from './components/employee/employee.component';
@@ -13,14 +15,15 @@ import { AuthGuard } from './guards/auth.guard';
 import { EmployeeGuard } from './guards/employee.guard';
 
 const children: Routes = [
-  
+  {path: 'manageUsers', component: ManageUsersComponent},
+  {path: 'manageOrders', component: ManageOrdersComponent}
 ]
 const routes: Routes = [
   {path: 'browse', component: BrowseComponent},
   {path: 'about', component: AboutComponent}, //This should be put in order
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard], children: children},
+  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard], children: children}, // need to add guard again
   {path: 'order', component: OrderComponent},
   {path: 'userOrders', component: UserOrderComponent, canActivate: [AuthGuard]},
   {path: 'employee', component: EmployeeComponent, canActivate: [EmployeeGuard]},

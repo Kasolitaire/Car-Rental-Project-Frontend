@@ -75,10 +75,10 @@ export class EmployeeComponent implements OnInit {
 
   processDates(returnDateString: string){
     const returnDate: Date = new Date(returnDateString);
-    const dropOffDate: Date = this.convertDate(this.currentMatchingOrder.dropOffDate);
+    const dropOffDate: Date = new Date(this.currentMatchingOrder.dropOffDate);
     this.totalCost = this.calculateRentalCost(this.currentMatchingOrder, this.currentMatchingVehicleType);
     this.totalDelayCost = this.totalDelayCostCalculation(dropOffDate, returnDate, this.currentMatchingVehicleType);
-    this.selectedDate = new Date(returnDate).toLocaleDateString();
+    this.selectedDate = new Date(returnDate).toLocaleDateString('en-US');
   }
 
   totalDelayCostCalculation(dropOffDate: Date, ReturnDate: Date, currentType: VehicleType):number {
@@ -90,7 +90,7 @@ export class EmployeeComponent implements OnInit {
 
   calculateRentalCost(currentOrder: OrderDetail, currentType: VehicleType): number{
     const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
-    const differenceInMilliseconds = this.convertDate(currentOrder.dropOffDate).getTime() - this.convertDate(currentOrder.pickUpDate).getTime();
+    const differenceInMilliseconds = new Date(currentOrder.dropOffDate).getTime() - new Date(currentOrder.pickUpDate).getTime();
     const differenceInDays = Math.round((differenceInMilliseconds / oneDayInMilliseconds)) + 1;
     const t = currentType.costPerDay;
     return currentType.costPerDay * differenceInDays;
@@ -100,13 +100,9 @@ export class EmployeeComponent implements OnInit {
     this.currentMatchingOrder = matchingOrder;
     this.currentMatchingVehicleType = matchingVehicleType;
 
-    this.minDate = this.convertDate(matchingOrder.dropOffDate);
+    this.minDate = new Date(matchingOrder.dropOffDate);
     this.calendarControlGroup.enable();
     this.currentMatchingOrder = matchingOrder;
   }
 
-  convertDate(badFormat: string): Date{
-    const split: string[] = badFormat.split('/');
-    return new Date(`${split[1]}/${split[0]}/${split[2]}`);
-  }
 }

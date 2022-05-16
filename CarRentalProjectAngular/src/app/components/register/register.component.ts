@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
     if(!this.registerForm.valid) return;
 
     this.registerDetails = this.registerForm.value;
-    this.registerDetails.birthDate = new Date(this.registerDetails.birthDate as string).toLocaleDateString()
+    this.registerDetails.birthDate = new Date(this.registerDetails.birthDate as string).toLocaleDateString('en-US')
     try {
       const response$ = this.httpClient.post(`${this.serverURL}SignUp/PostNewUser`, this.registerDetails);
       console.log(await firstValueFrom(response$));

@@ -38,11 +38,12 @@ export class AuthService {
       this.userReplay.next(user);
       this.userLoginStatus$.next(true);
       this.roleCheck(user);
+      sessionStorage.setItem('loginId', user.username);
+      sessionStorage.setItem('password', user.password);
     } catch (error) {
       //Needs to be more meaningful
       console.log((error as HttpErrorResponse).status);
     }
-    // this.httpClient.post("google.com", {} ).subscribe(t => { this.RegistrationComplete = (t as boolean); } )
   }
 
   //  Checks if the user is an admin or employee
@@ -81,6 +82,8 @@ export class AuthService {
     this.userLoginStatus$.next(false);
     this.adminLoginStatus$.next(false);
     this.employeeLoginStatus$.next(false);
+    sessionStorage.removeItem('loginId');
+    sessionStorage.removeItem('password');
     //  Might need further implementation
   }
 }

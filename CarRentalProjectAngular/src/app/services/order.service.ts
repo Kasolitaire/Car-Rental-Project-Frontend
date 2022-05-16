@@ -38,8 +38,8 @@ export class OrderService{
 
   private createOrder(matchingVehicle:Vehicle | undefined, currentUser: User, currentRentalPeriod: RentalPeriod){
     return {
-    pickUpDate: currentRentalPeriod.pickUpDate.toLocaleDateString(),
-    dropOffDate:currentRentalPeriod.dropOffDate.toLocaleDateString(),
+    pickUpDate: currentRentalPeriod.pickUpDate.toLocaleDateString('en-US'),
+    dropOffDate:currentRentalPeriod.dropOffDate.toLocaleDateString('en-US'),
     userId: currentUser.userId,
     serialNumber: matchingVehicle?.serialNumber
     } as OrderDetail
