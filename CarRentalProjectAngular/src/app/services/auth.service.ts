@@ -16,7 +16,7 @@ export class AuthService {
   serverURL: string;
 
   //Emits any user retrieved
-  private userReplay: ReplaySubject<User> = new ReplaySubject<User>(1);
+  private userReplay$: ReplaySubject<User> = new ReplaySubject<User>(1);
 
   //  Emits a boolean value stating that a user is logged in
   private userLoginStatus$: BehaviorSubject<boolean> =
@@ -35,14 +35,15 @@ export class AuthService {
 
     try {
       const user: User = await firstValueFrom(user$.pipe());
-      this.userReplay.next(user);
+      this.userReplay$.next(user);
       this.userLoginStatus$.next(true);
       this.roleCheck(user);
+      sessionStorage.setItem('loginId', user.username);
+      sessionStorage.setItem('password', user.password);
     } catch (error) {
       //Needs to be more meaningful
       console.log((error as HttpErrorResponse).status);
     }
-    // this.httpClient.post("google.com", {} ).subscribe(t => { this.RegistrationComplete = (t as boolean); } )
   }
 
   //  Checks if the user is an admin or employee
@@ -58,7 +59,7 @@ export class AuthService {
   }
 
   userAsObservable(): Observable<User>{
-    return this.userReplay.asObservable();
+    return this.userReplay$.asObservable();
   }
 
   //  Returns an Observable of user login status
@@ -80,6 +81,9 @@ export class AuthService {
   logoutService() {
     this.userLoginStatus$.next(false);
     this.adminLoginStatus$.next(false);
+    this.employeeLoginStatus$.next(false);
+    sessionStorage.removeItem('loginId');
+    sessionStorage.removeItem('password');
     //  Might need further implementation
   }
 }

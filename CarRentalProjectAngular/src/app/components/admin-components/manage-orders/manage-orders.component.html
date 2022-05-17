@@ -1,0 +1,58 @@
+<div class="container">
+  <button (click)="showFormOnClick()" class="registerButton blue">Show Form</button>
+</div>
+
+<div class="table-wrapper">
+  <table class="fl-table">
+    <thead>
+      <th>Order ID</th>
+      <th>Pick Up Date</th>
+      <th>Drop Off Date</th>
+      <th>Date Officially Returned</th>
+      <th>User ID</th>
+      <th>Serial Number</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of (orders$ | async)">
+        <td>{{order.orderId}}</td>
+        <td>{{order.pickUpDate}}</td>
+        <td>{{order.dropOffDate}}</td>
+        <td>{{order.dateOfficiallyReturned}}</td>
+        <td>{{order.userId}}</td>
+        <td>{{order.serialNumber}}</td>
+
+        <td (click)="defaultDetails(order)" ><b style="font-size: 20px;">Edit</b></td>
+        <td (click)="deleteOrder(order)"><b style="font-size: 20px;">Delete</b></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<form class="container" [formGroup]="orderUpdateForm" [hidden]="!showForm">
+  <mat-form-field appearance="fill" style="width: 45%">
+    <mat-date-range-input [formGroup]="orderUpdateForm" [rangePicker]="multiPicker">
+      <input matStartDate formControlName="pickUpDate" [placeholder]="orderUpdateDetails.pickUpDate">
+      <input matEndDate formControlName="dropOffDate" [placeholder]="orderUpdateDetails.dropOffDate">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="multiPicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #multiPicker></mat-date-range-picker>
+    </mat-form-field>
+
+  <mat-form-field style="margin-left: 10%; width: 45%;" appearance="fill">
+    <mat-label>Pick and clear to remove value</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="dateOfficiallyReturned">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker >
+  </mat-form-field>
+
+  <br>
+
+  <label><b>User ID</b></label>
+  <input class ='regular' type="number" placeholder="User ID" formControlName="userId">
+
+  <label><b>Serial Number</b></label>
+  <input class ='regular' type="text" placeholder="Serial Number" formControlName="serialNumber">
+
+  <button class="registerButton" (click)="updateOrder()">Update Order</button>
+  <button class="registerButton blue" (click)="createNewOrder()">Create New Order</button>
+</form>

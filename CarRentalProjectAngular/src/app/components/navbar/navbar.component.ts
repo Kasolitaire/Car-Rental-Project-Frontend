@@ -17,4 +17,8 @@ export class NavbarComponent implements OnInit {
     this.adminStatus$ = this.authService.adminStatusAsObservable();
     this.employeeStatus$ = this.authService.employeeStatusAsObservable();
   }
+
+  logout() {
+    this.authService.logoutService();
+  }
 }

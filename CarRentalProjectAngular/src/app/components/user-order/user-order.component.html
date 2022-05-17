@@ -1,2 +1,22 @@
-<p>user-order works!</p>
-{{userOrders$ | async| json}}
+
+<div class="container">
+  <h1 style="padding-top: 15%; font-size: 500%;" *ngIf="!(userOrders$ | async)">Nobody here but us chickens . . .</h1>
+  <table class="orders" *ngIf="(userOrders$ | async)">
+    <thead>
+      <th>orderId</th>
+      <th>pickUpDate</th>
+      <th>dropOffDate</th>
+      <th>serialNumber</th>
+      <th>dateOfficiallyReturned</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of (userOrders$ | async)">
+        <td>{{order.orderId}}</td>
+        <td>{{order.pickUpDate}}</td>
+        <td>{{order.dropOffDate}}</td>
+        <td>{{order.serialNumber}}</td>
+        <td>{{order.dateOfficiallyReturned}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

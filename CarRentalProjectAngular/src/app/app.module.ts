@@ -15,6 +15,13 @@ import { AdminComponent } from './components/admin/admin.component';
 import { BrowsePipe } from './pipes/browse.pipe';
 import { OrderComponent } from './components/order/order.component';
 import { UserOrderComponent } from './components/user-order/user-order.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
+import { PreviouslySelectedPipe } from './pipes/previously-selected.pipe';
+import { ManageUsersComponent } from './components/admin-components/manage-users/manage-users.component';
+import { ManageOrdersComponent } from './components/admin-components/manage-orders/manage-orders.component';
+import { ManageVehicleTypesComponent } from './components/admin-components/manage-vehicle-types/manage-vehicle-types.component';
+import { ManageVehicleInventoryComponent } from './components/admin-components/manage-vehicle-inventory/manage-vehicle-inventory.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +34,14 @@ import { UserOrderComponent } from './components/user-order/user-order.component
     AdminComponent,
     BrowsePipe,
     OrderComponent,
-    UserOrderComponent
+    UserOrderComponent,
+    EmployeeComponent,
+    VehicleComponent,
+    PreviouslySelectedPipe,
+    ManageUsersComponent,
+    ManageOrdersComponent,
+    ManageVehicleTypesComponent,
+    ManageVehicleInventoryComponent
   ],
   imports: [
     BrowserModule,

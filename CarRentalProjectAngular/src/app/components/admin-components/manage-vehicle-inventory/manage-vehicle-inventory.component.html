@@ -1,0 +1,66 @@
+<div class="container">
+  <button (click)="showFormOnClick()" class="registerButton blue">Show Form</button>
+</div>
+
+<div class="table-wrapper">
+ <table class="fl-table">
+   <thead>
+     <th>Vehicle ID</th>
+     <th>Vehicle Type ID</th>
+     <th>Kilometers</th>
+     <th>Car Photograph</th>
+     <th>Operational</th>
+     <th>Available</th>
+     <th>Serial Number</th>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let vehicle of (vehicles$ | async)">
+        <td>{{vehicle.vehicleId}}</td>
+        <td>{{vehicle.vehicleTypeId}}</td>
+        <td>{{vehicle.kilometers}}</td>
+        <td>{{vehicle.carPhotograph}}</td>
+        <td>{{vehicle.operational}}</td>
+        <td>{{vehicle.available}}</td>
+        <td>{{vehicle.serialNumber}}</td>
+
+        <td class="pointer" (click)="defaultDetails(vehicle)"><b style="font-size: 20px;">Edit</b></td>
+        <td class="pointer" (click)="deleteVehicle(vehicle)" ><b style="font-size: 20px;">Delete</b></td>
+      </tr>
+    </tbody>
+ </table>
+</div>
+
+<form class="container" [hidden]="!showForm" [formGroup]="vehicleUpdateForm">
+
+  <label><b>Vehicle Type ID</b></label>
+  <input class='regular' type="number" placeholder="Vehicle Type ID" formControlName="vehicleTypeId">
+
+  <label><b>Kilometers</b></label>
+  <input class='regular' type="number" placeholder="Kilometers" formControlName="kilometers">
+
+  <label><b>Serial Number</b></label>
+  <input class='regular' type="text" placeholder="Serial Number" formControlName="serialNumber">
+
+  <label class="third"> <b>Car Photograph</b> </label>
+  <label class="third"> <b>Operational</b></label>
+  <label class="third"> <b>Available</b></label>
+  <select formControlName="carPhotograph">
+    <option [ngValue]="true">True</option>
+    <option [ngValue]="false">False</option>
+  </select>
+
+  <select formControlName="operational">
+    <option [ngValue]="true">True</option>
+    <option [ngValue]="false">False</option>
+  </select>
+
+  <select formControlName="available">
+    <option [ngValue]="true">True</option>
+    <option [ngValue]="false">False</option>
+  </select>
+
+  <button [disabled]="!vehicleUpdateForm.valid" (click)="updateVehicle()" class="registerButton">Update User</button>
+
+  <button [disabled]="!vehicleUpdateForm.valid" (click)="createNewVehicle()" class="registerButton blue">Create New Vehicle</button>
+</form>

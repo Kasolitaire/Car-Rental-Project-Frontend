@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,7 +25,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
     //HTTP requests
     this.browseService.loadAllAvailableVehicles();
     this.browseService.loadAllAvailableVehicleTypes();
-
     //Subscription assignment
     this.vehicleSubscription = this.browseService
       .getAvailableVehiclesAsObservable()
@@ -66,7 +66,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   passSelectedVehicleType(selectedVehicleType: VehicleType){
     this.browseService.emitSelectedVehicle(selectedVehicleType);
+    this.commitSelectedTypeToSessionStorage(selectedVehicleType);
     this.router.navigate(['/', 'order']);
+  }
+
+  commitSelectedTypeToSessionStorage(selectedVehicleType: VehicleType){
+    const typeIdAsString: string = String(selectedVehicleType.vehicleTypeId);
+    localStorage.setItem(typeIdAsString, typeIdAsString);
   }
 
   //Subscription Properties
@@ -81,6 +87,12 @@ export class BrowseComponent implements OnInit, OnDestroy {
   //
   public vehicleFilterRequirementsFormGroup!: FormGroup;
   public vehicleFilterRequirements!: VehicleFilterRequirements;
+
+  public showSuggestion: boolean = false;
+
+  showSuggestionOnClick(){
+    this.showSuggestion = !this.showSuggestion;
+  }
 
   ngOnDestroy(): void {
     //Unsubscribing Vehicle Observables

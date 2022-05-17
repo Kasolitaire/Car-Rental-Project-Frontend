@@ -1,33 +1,53 @@
 <!-- {{availableVehiclesList|json}}
 {{availableVehicleTypesList|json}} -->
 
-<form [formGroup]="vehicleFilterRequirementsFormGroup" >
-  <mat-form-field>
-    <input matInput formControlName="generalRequirement">
-  </mat-form-field>
+<div class="container">
 
-  <div formGroupName="vehicleRequirements">
+  <form [formGroup]="vehicleFilterRequirementsFormGroup" >
     <mat-form-field>
-      <input matInput formControlName="brandName" placeholder="name..">
+      <input matInput formControlName="generalRequirement" placeholder="Search">
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="model">
-    </mat-form-field>
+    <div formGroupName="vehicleRequirements">
+      <mat-form-field>
+        <input matInput formControlName="brandName" placeholder="Brand">
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="dateManufactured">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="model" placeholder="Model">
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="gear">
-    </mat-form-field>
-  </div>
-</form>
-{{vehicleFilterRequirements|json}} <hr>
-{{availableVehicleTypesList|json}}
-<hr>
-<div *ngFor="let vehicle of availableVehicleTypesList">
-  <div *ngIf="vehicle|browse:vehicleFilterRequirements">{{vehicle|json}}</div>
-  <button (click)="passSelectedVehicleType(vehicle)">send</button>
+      <mat-form-field>
+        <input matInput formControlName="dateManufactured" placeholder="Year">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="gear" placeholder="Gear">
+      </mat-form-field>
+    </div>
+  </form>
 </div>
+
+
+<div class="wrapper">
+  <div *ngFor="let vehicleType of availableVehicleTypesList" >
+    <div *ngIf="vehicleType|browse:vehicleFilterRequirements">
+      <app-vehicle  class="card" [vehicle]="vehicleType"> </app-vehicle>
+      <button (click)="passSelectedVehicleType(vehicleType)">Choose</button>
+    </div>
+  </div>
+</div>
+
+<button class="blue" (click)="showSuggestionOnClick()">Show Suggestions</button>
+
+<div class="wrapper" [hidden]="!showSuggestion">
+  <div *ngFor="let vehicleType of availableVehicleTypesList" >
+    <div *ngIf="vehicleType|previouslySelected">
+      <app-vehicle  class="card" [vehicle]="vehicleType"> </app-vehicle>
+      <button (click)="passSelectedVehicleType(vehicleType)">Choose</button>
+    </div>
+  </div>
+</div>
+
+
+

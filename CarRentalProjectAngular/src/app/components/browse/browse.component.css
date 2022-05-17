@@ -1,0 +1,30 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-gap: 10px;
+  background-color: #fff;
+  color: #444;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 2% 2%;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.blue{
+  background-color:rgb(0, 0, 0);
+}

@@ -1,0 +1,104 @@
+<div class="table-wrapper">
+  <table class="fl-table">
+    <thead>
+      <th>User ID</th>
+      <th>User Role</th>
+      <th>Username</th>
+      <th>Full Name</th>
+      <th>ID</th>
+      <th>Birth Date</th>
+      <th>Gender</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Profile Picture</th>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of (users$ | async)" >
+        <td >{{user.userId}}</td>
+        <td >{{user.userRole}}</td>
+        <td >{{user.username}}</td>
+        <td >{{user.fullName}}</td>
+        <td >{{user.id}}</td>
+        <td >{{user.birthDate}}</td>
+        <td >{{user.gender}}</td>
+        <td >{{user.email}}</td>
+        <td >{{user.password}}</td>
+        <td >{{user.profilePicture}}</td>
+
+        <td (click)="defaultDetails(user)" ><b style="font-size: 20px;">Edit</b></td>
+        <td (click)="deleteUser(user)" ><b style="font-size: 20px;">Delete</b></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{{updateForm.valid}}
+
+
+<form class="container" [formGroup]="updateForm" [hidden]="!showForm" (ngSubmit)="updateUser()">
+  <div class="container">
+
+    <hr>
+
+    <label><b>User Type</b></label>
+
+    <br>
+
+    <select formControlName="gender" formControlName="userRole">
+      <option value="standard">Standard user</option>
+      <option value="employee">Employee</option>
+      <option value="admin">Admin</option>
+    </select>
+    <div *ngIf="updateForm.get('userRole')?.errors">{{updateForm.get('userRole')?.errors | json}}</div>
+
+    <br>
+
+    <label><b>Username</b></label>
+    <input class ='regular' type="text" placeholder="Enter Username" formControlName="username">
+    <div *ngIf="updateForm.get('username')?.errors">*Must under 50 characters</div>
+
+    <label><b>Email</b></label>
+    <input class ='regular' type="text" placeholder="Enter Email" formControlName="email">
+    <div *ngIf="updateForm.get('email')?.errors">{{updateForm.get('email')?.errors | json}}</div>
+
+    <label><b>Full Name</b></label>
+    <input class ='regular' type="text" placeholder="Enter Full Name" formControlName="fullName">
+    <div *ngIf="updateForm.get('fullName')?.errors">{{updateForm.get('fullName')?.errors | json}}</div>
+
+    <label><b>ID</b></label>
+    <input class ='regular' type="text" placeholder="ID" formControlName="id">
+    <div *ngIf="updateForm.get('id')?.errors">{{updateForm.get('id')?.errors | json}}</div>
+
+
+    <label style="width: 55%;"><b>Gender</b></label>
+    <label><b>Birth Date</b></label>
+
+    <br>
+
+    <select formControlName="gender">
+      <option value="" disabled selected>Select your Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+    <div *ngIf="updateForm.get('gender')?.errors">{{updateForm.get('gender')?.errors | json}}</div>
+
+    <mat-form-field style="margin-left: 10%; width: 40%;" appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input [max]="maxDate" readonly matInput [matDatepicker]="picker" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker >
+    </mat-form-field>
+    <div *ngIf="updateForm.get('birthDate')?.errors">{{updateForm.get('birthDate')?.errors | json}}</div>
+
+    <br>
+
+    <label><b>Password</b></label>
+    <input class ='regular' type="password" placeholder="Enter Password" formControlName="password">
+    <div *ngIf="updateForm.get('password')?.errors">{{updateForm.get('password')?.errors | json}}</div>
+
+    <button [disabled]="!updateForm.valid" type="submit" class="registerButton">Update User</button>
+  </div>
+</form>
+

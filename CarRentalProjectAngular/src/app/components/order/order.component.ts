@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter, firstValueFrom, Observable, Subscription } from 'rxjs';
+import { OrderDetail } from 'src/app/models/order';
 import { RentalPeriod } from 'src/app/models/rental-period';
 import { VehicleType } from 'src/app/models/vehicle-type';
 import { AuthService } from 'src/app/services/auth.service';
@@ -71,15 +72,20 @@ export class OrderComponent implements OnInit, OnDestroy {
     const differenceInMilliseconds =
       rentalPeriod.dropOffDate.getTime() - rentalPeriod.pickUpDate.getTime();
     const differenceInDays = Math.round((differenceInMilliseconds / oneDayInMilliseconds) + 1);
-    console.log(differenceInDays);
     const selectedType: VehicleType =  await firstValueFrom(this.selectedVehicleType$);
     this.totalCost = selectedType.costPerDay * differenceInDays;
     //this.selectedVehicleType$.subscribe((selectedType: VehicleType) =>  {selectedType.costPerDay * differenceInDays} ).unsubscribe();
   }
 
-  orderThenNavigate(currentRentalPeriod: RentalPeriod) {
-    this.orderService.executeOrder(currentRentalPeriod);
-    this.router.navigate(['/', 'userOrders']);
+  async orderThenNavigate(currentRentalPeriod: RentalPeriod) {
+    const loginStatus: boolean = await firstValueFrom(this.loginStatus$);
+    if(loginStatus){
+      this.orderService.executeOrder(currentRentalPeriod);
+      this.router.navigate(['/', 'userOrders']);
+    }
+    else{
+      this.router.navigate(['/','login']);
+    }
   }
   ngOnDestroy(): void {
     this.formSubscription.unsubscribe();
