@@ -1,0 +1,36 @@
+.header {
+  padding: 35px;
+  font-size: 1000%;
+  font-family: Garamond, serif;
+  color: white;
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgb(6, 2, 90) 0%, rgb(148, 148, 247) 35%, rgba(0,212,255,1) 100%);
+}
+
+
+.about {
+  height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+}
+
+body {
+  min-height: 100vh;
+  max-width: 500;
+  background: rgb(0,0,0);
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(61,61,61,1) 10%, rgba(164,164,164,1) 63%, rgba(0,0,0,1) 100%);
+  font-family: Garamond, serif;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 50%;
+  height: 50%;
+  border-top: 200px;
+  background-color: rgb(255, 209, 209);
+  margin: auto;
+  padding-top: 5%;
+  font-family: arial;
+}

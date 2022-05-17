@@ -34,9 +34,13 @@ export class LoginComponent implements OnInit {
   }
 
   async login(loginCredentials: LoginCredentials) {
-    this.authService.loadUser(loginCredentials)
+    await this.authService.loadUser(loginCredentials)
     const loginStatus: boolean = await firstValueFrom(this.loginStatus$);
-    if(loginStatus) return;
-    this.router.navigate(['/', 'browse']);
+    if(loginStatus){
+      this.router.navigate(['/', 'browse']);
+    }
+    else{
+      alert('Wrong Credentials')
+    }
   }
 }
