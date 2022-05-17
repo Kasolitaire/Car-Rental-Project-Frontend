@@ -33,9 +33,6 @@
   </table>
 </div>
 
-{{updateForm.valid}}
-
-
 <form class="container" [formGroup]="updateForm" [hidden]="!showForm" (ngSubmit)="updateUser()">
   <div class="container">
 
@@ -56,19 +53,19 @@
 
     <label><b>Username</b></label>
     <input class ='regular' type="text" placeholder="Enter Username" formControlName="username">
-    <div *ngIf="updateForm.get('username')?.errors">*Must under 50 characters</div>
+    <div class="error" *ngIf="updateForm.get('username')?.errors">*Must be under 50 characters</div>
 
     <label><b>Email</b></label>
     <input class ='regular' type="text" placeholder="Enter Email" formControlName="email">
-    <div *ngIf="updateForm.get('email')?.errors">{{updateForm.get('email')?.errors | json}}</div>
+    <div *ngIf="updateForm.get('email')?.errors">*Valid email & under 50 characters</div>
 
     <label><b>Full Name</b></label>
     <input class ='regular' type="text" placeholder="Enter Full Name" formControlName="fullName">
-    <div *ngIf="updateForm.get('fullName')?.errors">{{updateForm.get('fullName')?.errors | json}}</div>
+    <div class="error" *ngIf="updateForm.get('fullName')?.errors">*Must be under 50 characters</div>
 
     <label><b>ID</b></label>
     <input class ='regular' type="text" placeholder="ID" formControlName="id">
-    <div *ngIf="updateForm.get('id')?.errors">{{updateForm.get('id')?.errors | json}}</div>
+    <div *ngIf="updateForm.get('id')?.errors">*Must be exactly 9 digits</div>
 
 
     <label style="width: 55%;"><b>Gender</b></label>
@@ -90,13 +87,12 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker >
     </mat-form-field>
-    <div *ngIf="updateForm.get('birthDate')?.errors">{{updateForm.get('birthDate')?.errors | json}}</div>
 
     <br>
 
     <label><b>Password</b></label>
     <input class ='regular' type="password" placeholder="Enter Password" formControlName="password">
-    <div *ngIf="updateForm.get('password')?.errors">{{updateForm.get('password')?.errors | json}}</div>
+    <div *ngIf="updateForm.get('password')?.errors">*Must be under 50 characters</div>
 
     <button [disabled]="!updateForm.valid" type="submit" class="registerButton">Update User</button>
   </div>
