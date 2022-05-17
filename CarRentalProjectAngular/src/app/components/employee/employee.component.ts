@@ -91,7 +91,7 @@ export class EmployeeComponent implements OnInit {
     const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
     const differenceInMilliseconds = new Date(currentOrder.dropOffDate).getTime() - new Date(currentOrder.pickUpDate).getTime();
     const differenceInDays = Math.round((differenceInMilliseconds / oneDayInMilliseconds)) + 1;
-    const t = currentType.costPerDay;
+    const cost = currentType.costPerDay;
     return currentType.costPerDay * differenceInDays;
   }
 
