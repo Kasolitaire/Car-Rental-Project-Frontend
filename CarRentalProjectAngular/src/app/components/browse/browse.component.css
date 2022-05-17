@@ -24,3 +24,7 @@ button {
   width: 100%;
   opacity: 0.9;
 }
+
+.blue{
+  background-color:rgb(0, 0, 0);
+}

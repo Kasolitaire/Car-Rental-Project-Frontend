@@ -11,11 +11,8 @@ export class OrderGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.browseService.getVehicleSelectedStatusAsObservable().pipe(
-      map(selectedVehicle => {
-        if(selectedVehicle) return true;
-        else return this.router.parseUrl(`/browse?redirectUrl=${route.url}`);
-      })
-    );
+      if(!sessionStorage.getItem('loginId')) return true;
+      else return this.router.parseUrl(`/browse?redirectUrl=${route.url}`);
+
   }
 }

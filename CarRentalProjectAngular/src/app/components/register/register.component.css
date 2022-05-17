@@ -25,3 +25,8 @@ select {
   width: 100%;
   opacity: 0.9;
 }
+
+.error{
+  color: red;
+  font-size: smaller;
+}

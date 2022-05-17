@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
     }
   }
 
-  async login(loginCredentials: LoginCredentials){
+  login(loginCredentials: LoginCredentials){
     this.authService.loadUser(loginCredentials)
   }
 

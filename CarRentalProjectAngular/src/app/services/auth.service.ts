@@ -16,7 +16,7 @@ export class AuthService {
   serverURL: string;
 
   //Emits any user retrieved
-  private userReplay: ReplaySubject<User> = new ReplaySubject<User>(1);
+  private userReplay$: ReplaySubject<User> = new ReplaySubject<User>(1);
 
   //  Emits a boolean value stating that a user is logged in
   private userLoginStatus$: BehaviorSubject<boolean> =
@@ -35,7 +35,7 @@ export class AuthService {
 
     try {
       const user: User = await firstValueFrom(user$.pipe());
-      this.userReplay.next(user);
+      this.userReplay$.next(user);
       this.userLoginStatus$.next(true);
       this.roleCheck(user);
       sessionStorage.setItem('loginId', user.username);
@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   userAsObservable(): Observable<User>{
-    return this.userReplay.asObservable();
+    return this.userReplay$.asObservable();
   }
 
   //  Returns an Observable of user login status

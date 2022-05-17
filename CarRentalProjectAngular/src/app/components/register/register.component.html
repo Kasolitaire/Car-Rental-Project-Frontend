@@ -1,6 +1,4 @@
-<h1>{{registerForm.valid}}</h1>
-<h1>{{registerForm.errors|json}}dd</h1>
-<form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+<form [formGroup]="registerForm" (ngSubmit)="registerUser()" style="padding-top: 2%;">
   <div class="container">
 
     <h1>Register</h1>
@@ -10,15 +8,22 @@
 
     <label><b>Username</b></label>
     <input class ='regular' type="text" placeholder="Enter Username" formControlName="username">
+    <div class="error" *ngIf="registerForm.get('username')?.errors">*Required & under 50 characters</div>
 
     <label><b>Email</b></label>
     <input class ='regular' type="text" placeholder="Enter Email" formControlName="email">
+    <div class="error" *ngIf="registerForm.get('email')?.errors">*Valid email & under 50 characters</div>
+
 
     <label><b>Full Name</b></label>
     <input class ='regular' type="text" placeholder="Enter Full Name" formControlName="fullName">
+    <div class="error" *ngIf="registerForm.get('fullName')?.errors">*Required & under 50 characters</div>
+
 
     <label><b>ID</b></label>
     <input class ='regular' type="text" placeholder="ID" formControlName="id">
+    <div class="error" *ngIf="registerForm.get('id')?.errors">*Must be exactly 9 digits</div>
+
 
     <label style="width: 55%;"><b>Gender</b></label>
     <label><b>Birth Date</b></label>
@@ -43,11 +48,12 @@
 
     <label><b>Password</b></label>
     <input class ='regular' type="password" placeholder="Enter Password" formControlName="password">
+    <div class="error" *ngIf="registerForm.get('password')?.errors">*Required & under 50 characters</div>
 
     <button [disabled]="!registerForm.valid" type="submit" class="registerButton">Register</button>
   </div>
 
   <div class="container signin">
-    <p>Already have an account? <a href="#">Login</a>.</p>
+    <p>Already have an account? <a [routerLink]="['../login']">Login</a>.</p>
   </div>
 </form>

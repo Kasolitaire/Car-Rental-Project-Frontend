@@ -88,6 +88,12 @@ export class BrowseComponent implements OnInit, OnDestroy {
   public vehicleFilterRequirementsFormGroup!: FormGroup;
   public vehicleFilterRequirements!: VehicleFilterRequirements;
 
+  public showSuggestion: boolean = false;
+
+  showSuggestionOnClick(){
+    this.showSuggestion = !this.showSuggestion;
+  }
+
   ngOnDestroy(): void {
     //Unsubscribing Vehicle Observables
     this.vehicleSubscription.unsubscribe();

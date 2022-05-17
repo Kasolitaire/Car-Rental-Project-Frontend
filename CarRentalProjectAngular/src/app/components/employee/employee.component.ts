@@ -63,7 +63,6 @@ export class EmployeeComponent implements OnInit {
 
   async returnVehicle(order: OrderDetail){
     order.dateOfficiallyReturned = this.selectedDate;
-    debugger
     const result = await this.employeeService.returnVehicleRequest(order);
     if(result){
       alert(result.error);

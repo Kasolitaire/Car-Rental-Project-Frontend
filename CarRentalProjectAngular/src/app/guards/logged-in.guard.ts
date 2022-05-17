@@ -13,7 +13,7 @@ export class LoggedInGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authService.loginStatusAsObservable().pipe(
       map(loginStatus => {
-        if(loginStatus) return true;
+        if(!sessionStorage.getItem('loginId')) return true;
         else return this.router.parseUrl(`/browse?redirectUrl=${route.url}`);
       })
     );
