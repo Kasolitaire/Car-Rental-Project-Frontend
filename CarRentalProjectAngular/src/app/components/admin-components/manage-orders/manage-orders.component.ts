@@ -82,7 +82,7 @@ export class ManageOrdersComponent implements OnInit {
 
   async createNewOrder(){
     try {
-      if(confirm('Confirm to create vehicle')){
+      if(confirm('Confirm to create order')){
         this.orderUpdateDetails = this.orderUpdateForm.value;
         this.orderUpdateDetails.pickUpDate = new Date(this.orderUpdateDetails.pickUpDate).toLocaleDateString('en-US');
         this.orderUpdateDetails.dropOffDate = new Date(this.orderUpdateDetails.dropOffDate).toLocaleDateString('en-US');
