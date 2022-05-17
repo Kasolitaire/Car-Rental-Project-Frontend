@@ -38,7 +38,7 @@
   <form [hidden]="!showForm" [formGroup]="vehicleTypeUpdateForm">
     <label class="third"><b>Brand Name</b></label>
     <label class="third"><b>Model</b></label>
-    <label class="third"><b>Cost-Per-Day Delayed</b></label>
+    <label class="third"><b>Cost-Per-Day</b></label>
 
     <input class='regular' type="text" placeholder="Brand Name" formControlName="brandName">
 
@@ -48,15 +48,15 @@
 
     <br>
 
+    <label class="third"> <b>Cost-Per-Day Delayed</b></label>
     <label class="third"> <b>Year</b></label>
-    <label class="third"> <b>Available</b></label>
     <label class="third"> <b>Gear</b></label>
 
     <br>
 
     <input class='regular' type="number" placeholder="Cost-Per-Day Delayed" formControlName="costPerDayDelayed">
 
-    <input class='regular' type="number" placeholder="Year" formControlName="dateManufactured">
+    <input class='regular' type="text" placeholder="Year" formControlName="dateManufactured">
 
     <select formControlName="gear">
       <option value="automatic">Automatic</option>
